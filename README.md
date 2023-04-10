@@ -29,3 +29,5 @@ The deployment terminal is set to 80 columns by 24 rows. That means that each li
 
 -----
 Happy coding!
+
+https://towardsdatascience.com/speed-typing-test-project-with-python-da1a56987a5b
