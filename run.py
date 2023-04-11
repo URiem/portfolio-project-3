@@ -27,13 +27,14 @@ def print_instructions():
     """
     Prints the instruction for the Speed Test
     """
-    print("\nWelcome to the Speed Typing Test!\n")
     print("\n -- Instructions -- \n")
     print("1. The program generates a paragraph of short random sentences.\n")
     print("2. You will have to type the sentence as fast and as accurate as you can.\n")
     print("3. When you are ready to start enter y below and the paragraph will be generated.\n")
     print("4. You can then take time to look it over and enter y again when you are ready to start typing.\n")
 
+def print_more_information():
+    print("Insert text")
 
 def generate_random_paragraph():
     """
@@ -61,7 +62,7 @@ def typed_paragraph():
     end_time = time.time()
 
     time_taken = end_time - start_time
-    speed = len(typed_para)/time_taken
+    speed = len(typed_para)/(time_taken/60)
     
     results = [typed_para, speed]
 
@@ -73,14 +74,14 @@ def error_rate(sent_para, typed_para):
     """
     error_count = 0
     print(sent_para)
-    print(typed_para)
+    # print(typed_para)
 
-    length = len(sent_para)-1
-    print(length)
+    length = len(sent_para) - 1
+    # print(length)
 
     for character in range(length):
-        print(character)
-        print(sent_para[character])
+        # print(character)
+        # print(sent_para[character])
         # try:
         if sent_para[character] != typed_para[character]:
             print(f"Try Error {sent_para[character]} vs {typed_para[character]}")
@@ -90,13 +91,30 @@ def error_rate(sent_para, typed_para):
         # except:
         #     print("Except Error")
         #     error_count += 1
-    print(error_count)
+    # print(error_count)
     error_percent = error_count/length * 100
-    return error_percent
+    typing_accuracy = 100 - error_percent
+    
+    return typing_accuracy
 
 def main():
 
-    # print_instructions()
+    # print("\n*** Welcome to the Speed Typing Test! ***\n")
+    # print("What would you like to do?\n")
+    # print("1. Read the instructions - enter 'i' below.\n")
+    # print("2. Learn more about typical typing speeds - enter 'm' below.\n")
+    # print("3. Start the test - enter 's' below.\n")
+
+    # choice = input()
+    # if choice == 'i':
+    #     print_instructions()
+    # elif choice == 'm':
+    #     print_more_information()
+    # elif choice == 's':
+        
+    # else:
+    #     print('Your input is invalid. Exiting the game.')
+    #     quit()
 
     print("Are you ready to see your paragraph? Enter y for yes and n for no")
     ready_para = input()
@@ -127,9 +145,11 @@ def main():
         print("your input is invalid, exiting the program")
         quit()    
     
-    test_error_rate = error_rate(paragraph, test_para)
+    test_typing_accuary = error_rate(paragraph, test_para)
+    
     print("\n******** YOUR SCORE REPORT ********\n")
-    print(f"Error rate is {round(test_error_rate,1)} % of characters in the paragraph.\n")
-    print(f"Speed is {round(test_speed,1)} characters/seconds\n")
+    print(f"Typing accuracy is {round(test_typing_accuary,1)} % of characters in the paragraph.\n")
+    print(f"Speed is {round(test_speed,1)} characters/minute\n")
+    print(f"that is approx. {round(test_speed/5,1)} words/minute\n")
 
 main()
