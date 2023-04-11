@@ -23,6 +23,18 @@ SHEET = GSPREAD_CLIENT.open('typing-tests')
 # data = tests.get_all_values()
 # print(data)
 
+def print_instructions():
+    """
+    Prints the instruction for the Speed Test
+    """
+    print("\nWelcome to the Speed Typing Test!\n")
+    print("\n -- Instructions -- \n")
+    print("1. The program generates a paragraph of short random sentences.\n")
+    print("2. You will have to type the sentence as fast and as accurate as you can.\n")
+    print("3. When you are ready to start enter y below and the paragraph will be generated.\n")
+    print("4. You can then take time to look it over and enter y again when you are ready to start typing.\n")
+
+
 def generate_random_paragraph():
     """
     Create a paragraph of random sentences using wonderwords
@@ -60,28 +72,31 @@ def error_rate(sent_para, typed_para):
     Error rate is computed as a percentage of the length of the paragraph
     """
     error_count = 0
+    print(sent_para)
+    print(typed_para)
 
-    length = len(sent_para)
+    length = len(sent_para)-1
+    print(length)
 
     for character in range(length):
-        try:
-            if sent_para[character] != typed_para[character]:
-                error_count += 1
-            
-        except:
+        print(character)
+        print(sent_para[character])
+        # try:
+        if sent_para[character] != typed_para[character]:
+            print(f"Try Error {sent_para[character]} vs {typed_para[character]}")
             error_count += 1
-        
+        else:
+            continue   
+        # except:
+        #     print("Except Error")
+        #     error_count += 1
+    print(error_count)
     error_percent = error_count/length * 100
     return error_percent
 
 def main():
 
-    print("\nWelcome to the Speed Typing Test!\n")
-    print("\n -- The Rules -- \n")
-    print("1. The program generates a paragraph of short random sentences.\n")
-    print("2. You will have to type the sentence as fast and as accurate as you can.\n")
-    print("3. When you are ready to start enter y below and the paragraph will be generated.\n")
-    print("4. You can then take time to look it over and enter y again when you are ready to start typing.\n")
+    # print_instructions()
 
     print("Are you ready to see your paragraph? Enter y for yes and n for no")
     ready_para = input()
@@ -91,10 +106,9 @@ def main():
         print("Exiting the program")
         quit()
     else:
-        print("your input is invalid, try again")
-        main()
+        print("your input is invalid, exiting the program")
+        quit()
     
-    print("Type the paragraphy below as quickly as possible with as few mistakes to get the highest score: \n")
     print("\n---------------------------------------\n")
     print(paragraph)
     print("\n---------------------------------------\n")
@@ -105,7 +119,6 @@ def main():
         print("\nStart Typing\n")
         test_results = typed_paragraph()
         test_speed = test_results[1]
-        print(f"\nTime speed in characters/seconds: {test_speed}")
         test_para = test_results[0]
     elif ready_type == 'n':
         print("Exiting the program")
@@ -115,7 +128,8 @@ def main():
         quit()    
     
     test_error_rate = error_rate(paragraph, test_para)
-    print(f"\nError rates as a percentage of the length of the paragraph: {test_error_rate}")
-
+    print("\n******** YOUR SCORE REPORT ********\n")
+    print(f"Error rate is {round(test_error_rate,1)} % of characters in the paragraph.\n")
+    print(f"Speed is {round(test_speed,1)} characters/seconds\n")
 
 main()
