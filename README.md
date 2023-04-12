@@ -1,33 +1,337 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Geography Quiz
+(Developer: Ulrike Riemenschneider)
 
-Welcome URiem,
+![Mockup image](docs/iamresponsive.png)
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
+[Live webpage](https://uriem.github.io/geography-game/)
 
-## Reminders
+## Table of Content
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+1. [Introduction](#introduction)
+2. [Project Goals](#project-goals)
+    1. [User Goals](#user-goals)
+    2. [Site Owner Goals](#site-owner-goals)
+3. [User Experience](#user-experience)
+    1. [Strategy](#strategy)
+        * [Target Audience](#target-audience)
+        * [User Requirements & Expectations](#user-requirements-and-expectations)
+        * [User Stories](#user-stories)
+    2. [Scope](#scope)
+        * [Initial Stage](#intial-stage)
+        * [Future Additions](#future-additions)
+    3. [Structure](#structure)
+        * [Flowchart](#flowchart)
+    4. [Surface](#surface)
+        * [Color Scheme](#color-scheme)
+    5. [Features](#features)
+        * [Welcome Section](#welcome-section)
+        * [Information Section](#information-sections)
+        * [Test Section](#test-section)
+        * [Results Section](#results-section)
+        * [Future Additions](#future-additions)
+4. [Technologies Used](#technologies-used)
+    1. [Language](#languages)
+    2. [Frameworks & Tools](#frameworks--tools)
+    3. [Helpful Sites](#helpful-sites)
+5. [Testing and Validation](#testing-and-validation)
+    1. [PEP8](#pep8-online-testing)
+    2. [Testing User Stories](#testing-user-stories)
+    3. [Outstanding Issues](#outstanding-issues)
+6. [Bugs & Fixes](#bugs--fixes)
+7. [Deployment & Development](#deployment--development)
+8. [Credits](#credits)
 
-## Creating the Heroku app
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+## Introduction
 
-1. `heroku/python`
-2. `heroku/nodejs`
+The Speed and Accuracy Typing tests is designed to give users a chance to test their abilities in terms of typing speed and accuracy. It also gives users the opportunity to access information on what constitues a good average score and how to improve. The program is designed in Python and is run through a terminal window.
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+## Project Goals
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+### User Goals
+- The site's user wants to test their typing skills in terms of speed and accuracy.
 
-Connect your GitHub repository and deploy as normal.
+### Site Owner Goals
+- The site owner's goal is to provided an intuitive and easy to use application that allows a user to test their typing skills.
 
-## Constraints
+## User Experience
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+### Strategy
 
------
-Happy coding!
+#### Target Audience
+- Users interested in testing and monitoring their typing skills.
+- Users entering a field of work where typing is important and who are trying to improve this skill.
 
-https://towardsdatascience.com/speed-typing-test-project-with-python-da1a56987a5b
+#### User Requirements and Expectations
+- Simple and intuitive navigation system.
+- Clear instructions and process flow.
+- Immediate feedback on results.
+
+#### User Stories
+
+##### First-time User
+As a first time user, I want to ...
+1. ... read instructions.
+2. ... easily and intuitively move through the test.
+3. ... get easily understandable results.
+4. ... understand how my score fits in with standard averages.
+3. ... learn how I can improve my score.
+
+
+##### Returning Users
+As a returning user, I want to ...
+1. ... retake the test to see if my score has improved.
+2. ... access previous results.
+
+##### Site owner
+As the site owner, I want to ...
+1. ... develop an application that is easy to use.
+2. ... provide clear instructions of the application.
+3. ... provide the user with additional information on how to improve.
+4. ... provide the user with background information.
+5. ... allow the user to save their scores and return to retest and improve their scores.
+
+### Scope
+
+#### Intial Stage
+
+At the initial stage the application will include a introductary section where the user can choose from a few option for further information, such as instructions, information on average typing speeds, informationn on how to improve their typing skills. Then the user will be able to run the test and see immediate feedback in the form of a typing speed in characters/mintues and words/minute as well as a percentage accuracy. The user can then choose to return to the beginning and run the test again.
+
+#### Future Additions
+
+In a future edition of the application the user will be able to save their scores in a google spread sheet and monitor progress. 
+ 
+
+### Structure
+
+#### Flowchart
+
+![Flowchart](docs/flowchart.png)
+
+
+### Surface
+
+
+#### Color Scheme
+
+
+### Features
+
+#### Welcome Section
+
+<details>
+<summary>Welcome Screen</summary>
+<img src="docs/welcomescrn.png" width="700">
+</details>
+
+- A welcome message is displayed and the user can choose from several options to read instruction, optain further information or start the test.
+
+#### Information Sections
+
+<details>
+<summary>Instructions</summary>
+<img src="docs/chooselevelscrn.png" width="700">
+</details>
+
+- Here the user can read the instructions for the test.
+
+<details>
+<summary>Information on average typing speeds</summary>
+<img src="docs/chooselevelscrn.png" width="700">
+</details>
+
+- Here the user can optain information on typical typing speeds and some world records in speed typing.
+
+<details>
+<summary>Tips on how to improve</summary>
+<img src="docs/chooselevelscrn.png" width="700">
+</details>
+
+- Here the user can get a few tips on how to improve their typing speed and accuracy.
+
+#### Test Section 
+
+<details>
+<summary>Test Section</summary>
+<img src="docs/quizsectionscrn.png" width="700">
+</details>
+
+- This section walks the user through the test.
+- When the user indicates they are ready, the random paragraph will be displayed.
+- When the user indicates they are ready, they are required to copy the text into the terminal window.
+- To complete the test they need to hit 'Enter'.
+
+#### Results Section
+
+<details>
+<summary>Results Section</summary>
+<img src="docs/endofgamepage.png" width="700">
+</details>
+
+- Features the test results.
+- Accuracy is displayed as a percentage.
+- Speed is displayed in characters per minute and words per minute.
+- The user can then choose to exit the test, save the scores or test again.
+
+
+#### Future Additions
+
+If time allows the user will be able to store results and access them later to compare scores upon returning and running the test again. If time does not allow, this will be a feature to be added in the future.
+
+## Technologies Used
+
+### Languages
+- Python
+
+#### Python Packages
+- Gspread
+- Wonderwords
+- Time
+- Random
+- Difflib
+
+### Frameworks & Tools
+- Git
+- GitHub
+- Gitpod
+- Heroku
+- Google Spreadsheets
+- Lucidchart
+- PEP8
+
+### Helpful sites
+
+Several sites came in handy while developing the code to help with problem solving:
+
+- <a href="https://www.w3schools.com/">W3 Schools</a>
+- <a href="https://stackoverflow.com">Stack Overflow</a>
+- <a href="https://developer.mozilla.org/">mdn web docs</a>
+
+## Testing and Validation
+
+### PEP8 Online Testing
+
+<details>
+<summary>PEP8 Testing</summary>
+<img src="docs/404htmlvalidation.png" width="700">
+</details>
+
+### Testing User Stories
+
+As a first time user, I want to ...
+1. ... read instructions.
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+
+2. ... easily and intuitively move through the test.
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+
+3. ... get easily understandable results.
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+
+4. ... understand how my score fits in with standard averages.
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+
+3. ... learn how I can improve my score.
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+
+As a returning user, I want to ...
+1. ... retake the test to see if my score has improved.
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+
+2. ... access previous results.
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+
+
+As the site owner, I want to ...
+1. ... develop an application that is easy to use.
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+
+2. ... provide clear instructions of the application.
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+
+3. ... provide the user with additional information on how to improve.
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+
+4. ... provide the user with background information.
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+
+5. ... allow the user to save their scores and return to retest and improve their scores.
+
+| **Feature** | **Action** | **Expected Result** | **Actual Result** |
+|-------------|------------|---------------------|-------------------|
+
+
+
+### Outstanding Issues
+
+There are currently no outstanding issues that the developer is aware of.
+
+
+## Bugs & Fixes
+
+| **Bug** | **Fix** |
+| ----------- | ----------- |
+
+
+## Deployment & Development
+
+The website was deployed using GitHub Pages by following these steps:
+
+1. In the GitHub respository navigate to the Settings tab.
+2. Select Pages from the menu on the left-hand side of the page.
+3. For the source select Branch: 'main' and then select: 'save'.
+4. After the webpage refreshes automatically a ribbon at the top will displays the following message: "Your site is live at https://uriem.github.io/geography-game/"
+
+The website repository can be forked by the following steps:
+
+1. Go to the GitHub repository.
+2. Click on the Fork button in the upper right hand corner.
+
+The repository can be cloned by the following steps:
+
+1. Got to the GitHub repository.
+2. Locade the Code button above the list of files and click on it.
+3. Select if you prefer to clone using HTTPS, SSH, or Github CLI and click the copy button to copy the URL to your clipboard.
+4. Open Git Bash.
+5. Change the current working directory to the one where you want the cloned directory.
+6. Type git clone and paste the URL from the clipboard ($ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY)
+7. Press Enter to create your local clone.
+
+## Credits
+
+### Media
+
+### Code
+
+Resources and inspiration came from a few sources:
+
+- The initial idea and parts of the code came from https://towardsdatascience.com/speed-typing-test-project-with-python-da1a56987a5b. It was subsequently heavily developed and the code changed significantly.
+
+### Acknowledgements
+
+I would like to thank:
+- My mentor Brian O'Hare for his feedback, advice, guidance and support.
+- Cohort fascilitator Paul Thomas O'Rirodan, for his general advice on the management of the course and pointing us to a plethora of resources to help with the projects.
+- My husband, Matt, for his encouragement and support along the way.
