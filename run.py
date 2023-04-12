@@ -1,5 +1,5 @@
 # https://towardsdatascience.com/speed-typing-test-project-with-python-da1a56987a5b
-
+# to test code use: pycodestyle run.py
 import gspread
 from google.oauth2.service_account import Credentials
 
