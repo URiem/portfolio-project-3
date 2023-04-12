@@ -25,18 +25,69 @@ SHEET = GSPREAD_CLIENT.open('typing-tests')
 # data = tests.get_all_values()
 # print(data)
 
+def initial_choices():
+    """
+    Allows the user several choices to display various information, exit or start the game.
+    """
+    print("\n*** What would you like to do? ***\n")
+    print("1. Read the test instructions.\n")
+    print("2. Learn more about typical typing speeds.\n")
+    print("3. Get tips on how to improve your score.\n")
+    print("4. Exit the game.\n")
+    print("5. Start the test.\n")
+
+    print("Enter the number of your choice here:\n")
+    choice = input()
+
+    if choice == '1':
+        print_instructions()
+        ent = input("Hit enter when you are ready to continue\n")
+        if ent == "":
+            choice = initial_choices()
+    elif choice == '2':
+        print_more_information()
+        ent = input("Hit enter when you are ready to continue\n")
+        if ent == "":
+            choice = initial_choices()
+    elif choice == '3':
+        print_tips()
+        ent = input("Hit enter when you are ready to continue\n")
+        if ent == "":
+            choice = initial_choices()
+    elif choice == '4':
+        print("Exiting the game")
+        quit()
+    elif choice == '5':
+        print("Lets start the game\n")
+    else:
+        print('\nYour input is invalid. Try again.')
+        choice = initial_choices()
+
+
 def print_instructions():
     """
     Prints the instruction for the Speed Test
     """
     print("\n -- Instructions -- \n")
-    print("1. The program generates a paragraph of short random sentences.\n")
-    print("2. You will have to type the sentence as fast and as accurate as you can.\n")
-    print("3. When you are ready to start enter y below and the paragraph will be generated.\n")
-    print("4. You can then take time to look it over and enter y again when you are ready to start typing.\n")
+    print("1. Read and follow prompts closely as you navigate through the program.\n")
+    print("2. When you are ready the program generates a paragraph of short random sentences.\n")
+    print("3. When you are ready type the provided paragraph as quickly and accurately as possible.\n")
+    print("4. Hit enter when you are done typing.\n")
+    print("5. Your score of accuracy and speed will then be calculated and displayed.\n")
+    print("6. You will then be able to choose to exit the program or play again.\n")
 
 def print_more_information():
-    print("Insert text")
+    """ 
+    Print general information on average typing speeds and other useful or interesting information
+    """
+    print("\nInsert text\n")
+
+def print_tips():
+    """ 
+    Print on how to improve typing speed and accuracy
+    """
+    print("\nInsert text\n")
+
 
 def generate_random_paragraph():
     """
@@ -45,7 +96,7 @@ def generate_random_paragraph():
     sent_list = []
     sent_para = ""
 
-    for i in range(3):
+    for i in range(2):
         sent = RandomSentence()
         random_sent = sent.sentence()
         sent_list.append(random_sent)
@@ -81,7 +132,7 @@ def error_rate(sent_para, typed_para):
     for character in range(length):
         try:
             if sent_para[character] != typed_para[character]:
-                print(f"Try Error {sent_para[character]} vs {typed_para[character]}")
+                # print(f"Try Error {sent_para[character]} vs {typed_para[character]}")
                 error_count += 1
             else:
                 continue   
@@ -92,7 +143,7 @@ def error_rate(sent_para, typed_para):
     typing_accuracy = 100 - error_percent
 
     sequence_match = 100 * SequenceMatcher(a=sent_para, b=typed_para).ratio()
-    print(sequence_match)
+    # print(sequence_match)
 
     accuracy = [typing_accuracy, sequence_match]
     
@@ -100,51 +151,25 @@ def error_rate(sent_para, typed_para):
 
 def main():
 
-    # print("\n*** Welcome to the Speed Typing Test! ***\n")
-    # print("What would you like to do?\n")
-    # print("1. Read the instructions - enter 'i' below.\n")
-    # print("2. Learn more about typical typing speeds - enter 'm' below.\n")
-    # print("3. Start the test - enter 's' below.\n")
-
-    # choice = input()
-    # if choice == 'i':
-    #     print_instructions()
-    # elif choice == 'm':
-    #     print_more_information()
-    # elif choice == 's':
-        
-    # else:
-    #     print('Your input is invalid. Exiting the game.')
-    #     quit()
-
-    print("Are you ready to see your paragraph? Enter y for yes and n for no")
-    ready_para = input()
-    if ready_para == 'y':
-        paragraph = generate_random_paragraph()
-    elif ready_para == 'n':
-        print("Exiting the program")
-        quit()
-    else:
-        print("your input is invalid, exiting the program")
-        quit()
+    print("\n*** Welcome to the Speed Typing Test! ***\n")
     
-    print("\n---------------------------------------\n")
-    print(paragraph)
-    print("\n---------------------------------------\n")
+    initial_choices()
 
-    print("Are you ready to start typing? Enter y for yes and n for no")
-    ready_type = input()
-    if ready_type == 'y':
-        print("\nStart Typing\n")
+    print("\nAre you ready to see your paragraph?\n")
+    ent = input("Hit enter when you are ready to continue")
+    if ent == "":
+        paragraph = generate_random_paragraph()
+        print("\n---------------------------------------\n")
+        print(paragraph)
+        print("\n---------------------------------------\n")
+
+    ent = input("Hit enter when you are ready to start typing")
+    if ent == "":
+        print("\n")
         test_results = typed_paragraph()
         test_speed = test_results[1]
         test_para = test_results[0]
-    elif ready_type == 'n':
-        print("Exiting the program")
-        quit()
-    else:
-        print("your input is invalid, exiting the program")
-        quit()    
+
     
     test_typing_accuracy = error_rate(paragraph, test_para)
     
@@ -153,5 +178,17 @@ def main():
     print(f"Typing accuracy is {round(test_typing_accuracy[1],1)} % using SequenceMatch.\n")
     print(f"Speed is {round(test_speed,1)} characters/minute\n")
     print(f"that is approx. {round(test_speed/5,1)} words/minute\n")
+
+    print("\n **** What next? Exit (e) or play again (p)")
+    now_what = input()
+    if now_what == 'e':
+        print("\nThanks for taking the test! Come back soon!\n")
+        quit()
+    elif now_what == 'p':
+        main()
+    else:
+        print("Invalid input. Exiting the game")
+        quit()
+
 
 main()
