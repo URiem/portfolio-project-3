@@ -7,6 +7,8 @@ from wonderwords import RandomSentence
 import random
 import time
 
+from difflib import SequenceMatcher
+
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -43,7 +45,7 @@ def generate_random_paragraph():
     sent_list = []
     sent_para = ""
 
-    for i in range(1):
+    for i in range(3):
         sent = RandomSentence()
         random_sent = sent.sentence()
         sent_list.append(random_sent)
@@ -74,28 +76,27 @@ def error_rate(sent_para, typed_para):
     """
     error_count = 0
     print(sent_para)
-    # print(typed_para)
-
     length = len(sent_para) - 1
-    # print(length)
 
     for character in range(length):
-        # print(character)
-        # print(sent_para[character])
-        # try:
-        if sent_para[character] != typed_para[character]:
-            print(f"Try Error {sent_para[character]} vs {typed_para[character]}")
+        try:
+            if sent_para[character] != typed_para[character]:
+                print(f"Try Error {sent_para[character]} vs {typed_para[character]}")
+                error_count += 1
+            else:
+                continue   
+        except:
             error_count += 1
-        else:
-            continue   
-        # except:
-        #     print("Except Error")
-        #     error_count += 1
-    # print(error_count)
+
     error_percent = error_count/length * 100
     typing_accuracy = 100 - error_percent
+
+    sequence_match = 100 * SequenceMatcher(a=sent_para, b=typed_para).ratio()
+    print(sequence_match)
+
+    accuracy = [typing_accuracy, sequence_match]
     
-    return typing_accuracy
+    return accuracy
 
 def main():
 
@@ -145,10 +146,11 @@ def main():
         print("your input is invalid, exiting the program")
         quit()    
     
-    test_typing_accuary = error_rate(paragraph, test_para)
+    test_typing_accuracy = error_rate(paragraph, test_para)
     
     print("\n******** YOUR SCORE REPORT ********\n")
-    print(f"Typing accuracy is {round(test_typing_accuary,1)} % of characters in the paragraph.\n")
+    print(f"Typing accuracy is {round(test_typing_accuracy[0],1)} % of characters in the paragraph.\n")
+    print(f"Typing accuracy is {round(test_typing_accuracy[1],1)} % using SequenceMatch.\n")
     print(f"Speed is {round(test_speed,1)} characters/minute\n")
     print(f"that is approx. {round(test_speed/5,1)} words/minute\n")
 
