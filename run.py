@@ -25,9 +25,11 @@ SHEET = GSPREAD_CLIENT.open('typing-tests')
 # data = tests.get_all_values()
 # print(data)
 
+
 def initial_choices():
     """
-    Allows the user several choices to display various information, exit or start the game.
+    Allows the user several choices to display various information,
+    exit or start the game.
     """
     print("\n*** What would you like to do? ***\n")
     print("1. Read the test instructions.\n")
@@ -76,14 +78,17 @@ def print_instructions():
     print("5. Your score of accuracy and speed will then be calculated and displayed.\n")
     print("6. You will then be able to choose to exit the program or play again.\n")
 
+
 def print_more_information():
-    """ 
-    Print general information on average typing speeds and other useful or interesting information
+    """
+    Print general information on average typing speeds and
+    other useful or interesting information
     """
     print("\nInsert text\n")
 
+
 def print_tips():
-    """ 
+    """
     Print on how to improve typing speed and accuracy
     """
     print("\nInsert text\n")
@@ -104,22 +109,23 @@ def generate_random_paragraph():
 
     return sent_para
 
+
 def typed_paragraph():
     """
     This function captures the typed paragraph from the user and
     measures the time taken to type the paragraphy
     """
-    
     start_time = time.time()
     typed_para = input()
     end_time = time.time()
 
     time_taken = end_time - start_time
     speed = len(typed_para)/(time_taken/60)
-    
+
     results = [typed_para, speed]
 
     return results
+
 
 def error_rate(sent_para, typed_para):
     """
@@ -132,10 +138,9 @@ def error_rate(sent_para, typed_para):
     for character in range(length):
         try:
             if sent_para[character] != typed_para[character]:
-                # print(f"Try Error {sent_para[character]} vs {typed_para[character]}")
                 error_count += 1
             else:
-                continue   
+                continue
         except:
             error_count += 1
 
@@ -146,13 +151,14 @@ def error_rate(sent_para, typed_para):
     # print(sequence_match)
 
     accuracy = [typing_accuracy, sequence_match]
-    
+
     return accuracy
+
 
 def main():
 
     print("\n*** Welcome to the Speed Typing Test! ***\n")
-    
+
     initial_choices()
 
     print("\nAre you ready to see your paragraph?\n")
@@ -170,9 +176,8 @@ def main():
         test_speed = test_results[1]
         test_para = test_results[0]
 
-    
     test_typing_accuracy = error_rate(paragraph, test_para)
-    
+
     print("\n******** YOUR SCORE REPORT ********\n")
     print(f"Typing accuracy is {round(test_typing_accuracy[0],1)} % of characters in the paragraph.\n")
     print(f"Typing accuracy is {round(test_typing_accuracy[1],1)} % using SequenceMatch.\n")
