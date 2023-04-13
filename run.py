@@ -60,7 +60,7 @@ def initial_choices():
         print("Exiting the game")
         quit()
     elif choice == '5':
-        print("Lets start the game\n")
+        print("Lets start the test\n")
     else:
         print('\nYour input is invalid. Try again.')
         choice = initial_choices()
@@ -184,7 +184,7 @@ def main():
     print(f"Speed is {round(test_speed,1)} characters/minute\n")
     print(f"that is approx. {round(test_speed/5,1)} words/minute\n")
 
-    print("\n **** What next? Exit (e) or play again (p)")
+    print("\n **** What next? Exit (e) or test again (t)")
     now_what = input()
     if now_what == 'e':
         print("\nThanks for taking the test! Come back soon!\n")
