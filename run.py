@@ -6,10 +6,11 @@ from google.oauth2.service_account import Credentials
 from wonderwords import RandomSentence
 import random
 import time
-import os 
+import os
 from os import system, name
 from difflib import SequenceMatcher
 from termcolor import colored, cprint
+from statistics import mean
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -26,6 +27,7 @@ SHEET = GSPREAD_CLIENT.open('typing-tests')
 
 # data = tests.get_all_values()
 # print(data)
+
 
 def clear():
     """
@@ -44,7 +46,7 @@ def initial_choices():
     Allows the user several choices to display various information,
     exit or start the game.
     """
-    cprint("\nWhat would you like to do?\n",attrs=["underline"])
+    cprint("\nWhat would you like to do?\n", attrs=["underline"])
     print("1. Read the test instructions.\n")
     print("2. Learn more about typical typing speeds.\n")
     print("3. Get tips on how to improve your score.\n")
@@ -68,7 +70,7 @@ def initial_choices():
             quit()
         elif choice == '5':
             clear()
-            cprint("\n*** Welcome to the Speed Typing Test! ***\n","light_yellow")
+            cprint("\n*** Welcome to the Speed Typing Test! ***\n", "light_yellow")
         else:
             raise ValueError
     except ValueError:
@@ -107,10 +109,10 @@ def print_more_information():
     ent = input("Hit enter when you are ready to continue\n")
     if ent == "":
         clear()
-        choice = initial_choices()
+        initial_choices()
     else:
         clear()
-        choice = initial_choices()
+        initial_choices()
 
 
 def print_tips():
@@ -122,10 +124,10 @@ def print_tips():
     ent = input("Hit enter when you are ready to continue\n")
     if ent == "":
         clear()
-        choice = initial_choices()
+        initial_choices()
     else:
         clear()
-        choice = initial_choices()
+        initial_choices()
 
 
 def generate_random_paragraph():
@@ -156,7 +158,7 @@ def typed_paragraph():
     end_time = time.time()
 
     time_taken = end_time - start_time
-    speed = len(typed_para)/(time_taken/60)
+    speed = round(len(typed_para)/(time_taken/60), 1)
 
     results = [typed_para, speed]
 
@@ -171,9 +173,7 @@ def error_rate(sent_para, typed_para):
     # print(sent_para)
     # length = len(sent_para) - 1
 
-   
-    sequence_match = 100 * SequenceMatcher(a=sent_para, b=typed_para).ratio()
-
+    sequence_match = round(100 * SequenceMatcher(a=sent_para, b=typed_para).ratio(), 1)
     # for character in range(length):
     #     try:
     #         if sent_para[character] != typed_para[character]:
@@ -190,21 +190,39 @@ def error_rate(sent_para, typed_para):
 
     return sequence_match
 
+
 def save_score(speed, accuracy):
+    """
+    Save score to worksheet that matches the username
+    """
 
     data = [speed, accuracy]
     print("Enter your username:")
     username = input()
     print(f"Updating {username} scoresheet ...\n")
-    scoresheet_to_update = SHEET.worksheet(username)
-    scoresheet_to_update.append_row(data)
+    user_scoresheet = SHEET.worksheet(username)
+    user_scoresheet.append_row(data)
     print(f"{username} scoresheet updated successfully.\n")
+
+    print(f"Calculating Statistics for {username}")
+    user_speed_values = user_scoresheet.col_values(1)
+    user_accuracy_values = user_scoresheet.col_values(2)
+
+    int_speeds = [eval(i) for i in user_speed_values[1:]]
+    int_accuracy = [eval(i) for i in user_accuracy_values[1:]]
+    avg_speed = round(mean(int_speeds), 1)
+    avg_accuracy = round(mean(int_accuracy), 1)
+    print(avg_speed)
+    print(avg_accuracy)
 
 
 def main():
+    """
+    Run all program functions
+    """
     clear()
 
-    cprint("\n*** Welcome to the Speed Typing Test! ***\n","light_yellow")
+    cprint("\n*** Welcome to the Speed Typing Test! ***\n", "light_yellow")
 
     initial_choices()
 
@@ -237,14 +255,14 @@ def main():
 
     print("\n******** YOUR SCORE REPORT ********\n")
     # print(f"Typing accuracy is {round(test_typing_accuracy[0],1)} % of characters in the paragraph.\n")
-    print(f"Typing accuracy is {round(test_typing_accuracy,1)} % of characters in the paragraph.\n")
-    print(f"Speed is {round(test_speed,1)} characters/minute\n")
-    print(f"that is approx. {round(test_speed/5,1)} words/minute\n")
+    print(f"Typing accuracy is {test_typing_accuracy} % of characters in the paragraph.\n")
+    print(f"Speed is {test_speed} characters/minute\n")
+    print(f"that is approx. {test_speed/5} words/minute\n")
 
     print("\n **** What next? **** \n")
     print("1. Exit (e)\n")
     print("2. Test again (t)\n")
-    print("3. Save results (s)\n")
+    print("3. Save results and display statistics (s)\n")
     now_what = input()
     if now_what == 'e':
         print("\nThanks for taking the test! Come back soon!\n")
@@ -252,8 +270,8 @@ def main():
     elif now_what == 't':
         main()
     elif now_what == 's':
-        save_score(test_speed,test_typing_accuracy)
-        initial_choices()
+        save_score(test_speed, test_typing_accuracy)
+        quit()
     else:
         print("Invalid input. Exiting the game")
         quit()
