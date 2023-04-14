@@ -204,7 +204,7 @@ def save_score(speed, accuracy):
     user_scoresheet.append_row(data)
     print(f"{username} scoresheet updated successfully.\n")
 
-    print(f"Calculating Statistics for {username}")
+    print(f"Calculating Statistics for {username}\n")
     user_speed_values = user_scoresheet.col_values(1)
     user_accuracy_values = user_scoresheet.col_values(2)
 
@@ -212,8 +212,9 @@ def save_score(speed, accuracy):
     int_accuracy = [eval(i) for i in user_accuracy_values[1:]]
     avg_speed = round(mean(int_speeds), 1)
     avg_accuracy = round(mean(int_accuracy), 1)
-    print(avg_speed)
-    print(avg_accuracy)
+    print(f"Your average speed is {avg_speed} characters per minute")
+    print(f"That is approx. {avg_speed/5} words per minute")
+    print(f"Your average accuracy is {avg_accuracy}%")
 
 
 def main():
