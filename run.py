@@ -9,6 +9,8 @@ import time
 
 from difflib import SequenceMatcher
 
+from termcolor import colored, cprint
+
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -31,14 +33,14 @@ def initial_choices():
     Allows the user several choices to display various information,
     exit or start the game.
     """
-    print("\n*** What would you like to do? ***\n")
+    cprint("\nWhat would you like to do?\n",attrs=["underline"])
     print("1. Read the test instructions.\n")
     print("2. Learn more about typical typing speeds.\n")
     print("3. Get tips on how to improve your score.\n")
     print("4. Exit the game.\n")
     print("5. Start the test.\n")
 
-    print("Enter the number of your choice here:\n")
+    cprint("Enter the number of your choice here:\n", attrs=["bold"])
     choice = input()
 
     if choice == '1':
@@ -159,7 +161,7 @@ def error_rate(sent_para, typed_para):
 
 def main():
 
-    print("\n*** Welcome to the Speed Typing Test! ***\n")
+    cprint("\n*** Welcome to the Speed Typing Test! ***\n","light_yellow")
 
     initial_choices()
 
