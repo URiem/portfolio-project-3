@@ -107,7 +107,9 @@ def generate_random_paragraph():
         sent_list.append(random_sent)
         sent_para += random_sent + " "
 
-    return sent_para
+    test_para = sent_para[:-1]
+
+    return test_para
 
 
 def typed_paragraph():
@@ -135,6 +137,9 @@ def error_rate(sent_para, typed_para):
     print(sent_para)
     length = len(sent_para) - 1
 
+   
+    sequence_match = 100 * SequenceMatcher(a=sent_para, b=typed_para).ratio()
+
     for character in range(length):
         try:
             if sent_para[character] != typed_para[character]:
@@ -146,9 +151,6 @@ def error_rate(sent_para, typed_para):
 
     error_percent = error_count/length * 100
     typing_accuracy = 100 - error_percent
-
-    sequence_match = 100 * SequenceMatcher(a=sent_para, b=typed_para).ratio()
-    # print(sequence_match)
 
     accuracy = [typing_accuracy, sequence_match]
 
@@ -189,7 +191,7 @@ def main():
     if now_what == 'e':
         print("\nThanks for taking the test! Come back soon!\n")
         quit()
-    elif now_what == 'p':
+    elif now_what == 't':
         main()
     else:
         print("Invalid input. Exiting the game")
