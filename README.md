@@ -206,6 +206,7 @@ Several sites came in handy while developing the code to help with problem solvi
 - <a href="https://www.w3schools.com/">W3 Schools</a>
 - <a href="https://stackoverflow.com">Stack Overflow</a>
 - <a href="https://developer.mozilla.org/">mdn web docs</a>
+https://geekflare.com/python-remove-last-character/
 
 ## Testing and Validation
 

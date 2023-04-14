@@ -6,6 +6,12 @@ from google.oauth2.service_account import Credentials
 from wonderwords import RandomSentence
 import random
 import time
+from time import sleep
+import os 
+from os import system, name
+
+# print(os.name)
+# name = os.name
 
 from difflib import SequenceMatcher
 
@@ -27,6 +33,15 @@ SHEET = GSPREAD_CLIENT.open('typing-tests')
 # data = tests.get_all_values()
 # print(data)
 
+def clear():
+    # for windows
+    if name == 'nt':
+        _ = system('cls')
+
+    # for mac and linux
+    else:
+        _ = system('clear')
+
 
 def initial_choices():
     """
@@ -44,26 +59,22 @@ def initial_choices():
     choice = input()
 
     if choice == '1':
+        clear()
         print_instructions()
-        ent = input("Hit enter when you are ready to continue\n")
-        if ent == "":
-            choice = initial_choices()
     elif choice == '2':
+        clear()
         print_more_information()
-        ent = input("Hit enter when you are ready to continue\n")
-        if ent == "":
-            choice = initial_choices()
     elif choice == '3':
+        clear()
         print_tips()
-        ent = input("Hit enter when you are ready to continue\n")
-        if ent == "":
-            choice = initial_choices()
     elif choice == '4':
         print("Exiting the game")
         quit()
     elif choice == '5':
-        print("Lets start the test\n")
+        clear()
+        cprint("\n*** Welcome to the Speed Typing Test! ***\n","light_yellow")
     else:
+        clear()
         print('\nYour input is invalid. Try again.')
         choice = initial_choices()
 
@@ -79,6 +90,13 @@ def print_instructions():
     print("4. Hit enter when you are done typing.\n")
     print("5. Your score of accuracy and speed will then be calculated and displayed.\n")
     print("6. You will then be able to choose to exit the program or play again.\n")
+    ent = input("Hit enter when you are ready to continue\n")
+    if ent == "":
+        clear()
+        choice = initial_choices()
+    else:
+        clear()
+        choice = initial_choices()
 
 
 def print_more_information():
@@ -88,12 +106,28 @@ def print_more_information():
     """
     print("\nInsert text\n")
 
+    ent = input("Hit enter when you are ready to continue\n")
+    if ent == "":
+        clear()
+        choice = initial_choices()
+    else:
+        clear()
+        choice = initial_choices()
+
 
 def print_tips():
     """
     Print on how to improve typing speed and accuracy
     """
     print("\nInsert text\n")
+
+    ent = input("Hit enter when you are ready to continue\n")
+    if ent == "":
+        clear()
+        choice = initial_choices()
+    else:
+        clear()
+        choice = initial_choices()
 
 
 def generate_random_paragraph():
@@ -160,6 +194,7 @@ def error_rate(sent_para, typed_para):
 
 
 def main():
+    clear()
 
     cprint("\n*** Welcome to the Speed Typing Test! ***\n","light_yellow")
 
@@ -172,9 +207,19 @@ def main():
         print("\n---------------------------------------\n")
         print(paragraph)
         print("\n---------------------------------------\n")
+    else:
+        paragraph = generate_random_paragraph()
+        print("\n---------------------------------------\n")
+        print(paragraph)
+        print("\n---------------------------------------\n")
 
     ent = input("Hit enter when you are ready to start typing")
     if ent == "":
+        print("\n")
+        test_results = typed_paragraph()
+        test_speed = test_results[1]
+        test_para = test_results[0]
+    else:
         print("\n")
         test_results = typed_paragraph()
         test_speed = test_results[1]
