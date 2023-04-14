@@ -6,15 +6,9 @@ from google.oauth2.service_account import Credentials
 from wonderwords import RandomSentence
 import random
 import time
-from time import sleep
 import os 
 from os import system, name
-
-# print(os.name)
-# name = os.name
-
 from difflib import SequenceMatcher
-
 from termcolor import colored, cprint
 
 SCOPE = [
@@ -34,10 +28,12 @@ SHEET = GSPREAD_CLIENT.open('typing-tests')
 # print(data)
 
 def clear():
+    """
+    Clear the terminal window when new text section is displayed
+    """
     # for windows
     if name == 'nt':
         _ = system('cls')
-
     # for mac and linux
     else:
         _ = system('clear')
@@ -57,26 +53,28 @@ def initial_choices():
 
     cprint("Enter the number of your choice here:\n", attrs=["bold"])
     choice = input()
-
-    if choice == '1':
+    try:
+        if choice == '1':
+            clear()
+            print_instructions()
+        elif choice == '2':
+            clear()
+            print_more_information()
+        elif choice == '3':
+            clear()
+            print_tips()
+        elif choice == '4':
+            print("Exiting the game")
+            quit()
+        elif choice == '5':
+            clear()
+            cprint("\n*** Welcome to the Speed Typing Test! ***\n","light_yellow")
+        else:
+            raise ValueError
+    except ValueError:
         clear()
-        print_instructions()
-    elif choice == '2':
-        clear()
-        print_more_information()
-    elif choice == '3':
-        clear()
-        print_tips()
-    elif choice == '4':
-        print("Exiting the game")
-        quit()
-    elif choice == '5':
-        clear()
-        cprint("\n*** Welcome to the Speed Typing Test! ***\n","light_yellow")
-    else:
-        clear()
-        print('\nYour input is invalid. Try again.')
-        choice = initial_choices()
+        print(f"Invalid data: {choice}, please try again.\n")
+        initial_choices()
 
 
 def print_instructions():
@@ -169,28 +167,38 @@ def error_rate(sent_para, typed_para):
     """
     Error rate is computed as a percentage of the length of the paragraph
     """
-    error_count = 0
-    print(sent_para)
-    length = len(sent_para) - 1
+    # error_count = 0
+    # print(sent_para)
+    # length = len(sent_para) - 1
 
    
     sequence_match = 100 * SequenceMatcher(a=sent_para, b=typed_para).ratio()
 
-    for character in range(length):
-        try:
-            if sent_para[character] != typed_para[character]:
-                error_count += 1
-            else:
-                continue
-        except:
-            error_count += 1
+    # for character in range(length):
+    #     try:
+    #         if sent_para[character] != typed_para[character]:
+    #             error_count += 1
+    #         else:
+    #             continue
+    #     except:
+    #         error_count += 1
 
-    error_percent = error_count/length * 100
-    typing_accuracy = 100 - error_percent
+    # error_percent = error_count/length * 100
+    # typing_accuracy = 100 - error_percent
 
-    accuracy = [typing_accuracy, sequence_match]
+    # accuracy = [typing_accuracy, sequence_match]
 
-    return accuracy
+    return sequence_match
+
+def save_score(speed, accuracy):
+
+    data = [speed, accuracy]
+    print("Enter your username:")
+    username = input()
+    print(f"Updating {username} scoresheet ...\n")
+    scoresheet_to_update = SHEET.worksheet(username)
+    scoresheet_to_update.append_row(data)
+    print(f"{username} scoresheet updated successfully.\n")
 
 
 def main():
@@ -228,18 +236,24 @@ def main():
     test_typing_accuracy = error_rate(paragraph, test_para)
 
     print("\n******** YOUR SCORE REPORT ********\n")
-    print(f"Typing accuracy is {round(test_typing_accuracy[0],1)} % of characters in the paragraph.\n")
-    print(f"Typing accuracy is {round(test_typing_accuracy[1],1)} % using SequenceMatch.\n")
+    # print(f"Typing accuracy is {round(test_typing_accuracy[0],1)} % of characters in the paragraph.\n")
+    print(f"Typing accuracy is {round(test_typing_accuracy,1)} % of characters in the paragraph.\n")
     print(f"Speed is {round(test_speed,1)} characters/minute\n")
     print(f"that is approx. {round(test_speed/5,1)} words/minute\n")
 
-    print("\n **** What next? Exit (e) or test again (t)")
+    print("\n **** What next? **** \n")
+    print("1. Exit (e)\n")
+    print("2. Test again (t)\n")
+    print("3. Save results (s)\n")
     now_what = input()
     if now_what == 'e':
         print("\nThanks for taking the test! Come back soon!\n")
         quit()
     elif now_what == 't':
         main()
+    elif now_what == 's':
+        save_score(test_speed,test_typing_accuracy)
+        initial_choices()
     else:
         print("Invalid input. Exiting the game")
         quit()
