@@ -11,6 +11,7 @@ from os import system, name
 from difflib import SequenceMatcher
 from termcolor import colored, cprint
 from statistics import mean
+import pandas as pd
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -50,8 +51,9 @@ def initial_choices():
     print("1. Read the test instructions.\n")
     print("2. Learn more about typical typing speeds.\n")
     print("3. Get tips on how to improve your score.\n")
-    print("4. Exit the game.\n")
-    print("5. Start the test.\n")
+    print("4. See your old scores and statistics.\n")
+    print("5. Exit the game.\n")
+    print("6. Start the test.\n")
 
     cprint("Enter the number of your choice here:\n", attrs=["bold"])
     choice = input()
@@ -66,9 +68,12 @@ def initial_choices():
             clear()
             print_tips()
         elif choice == '4':
+            clear()
+            see_old_scores_and_statistics()
+        elif choice == '5':
             print("Exiting the game")
             quit()
-        elif choice == '5':
+        elif choice == '6':
             clear()
             cprint("\n*** Welcome to the Speed Typing Test! ***\n", "light_yellow")
         else:
@@ -90,13 +95,8 @@ def print_instructions():
     print("4. Hit enter when you are done typing.\n")
     print("5. Your score of accuracy and speed will then be calculated and displayed.\n")
     print("6. You will then be able to choose to exit the program or play again.\n")
-    ent = input("Hit enter when you are ready to continue\n")
-    if ent == "":
-        clear()
-        choice = initial_choices()
-    else:
-        clear()
-        choice = initial_choices()
+    
+    return_to_initial_choices()
 
 
 def print_more_information():
@@ -106,13 +106,7 @@ def print_more_information():
     """
     print("\nInsert text\n")
 
-    ent = input("Hit enter when you are ready to continue\n")
-    if ent == "":
-        clear()
-        initial_choices()
-    else:
-        clear()
-        initial_choices()
+    return_to_initial_choices()
 
 
 def print_tips():
@@ -121,6 +115,49 @@ def print_tips():
     """
     print("\nInsert text\n")
 
+    return_to_initial_choices()
+
+
+def see_old_scores_and_statistics():
+    """
+    Access google sheet with old scores and display scores and statistics
+    in the terminal window
+    """
+    print("Enter your username:\n")
+    username = input()
+    user_scoresheet = SHEET.worksheet(username)
+    score_keys = user_scoresheet.row_values(1)
+    list_scores = [user_scoresheet.col_values(i)[1:] for i in range(1,4)]
+    score_dic = dict(zip(score_keys, list_scores))
+
+    print(f"\nThe collective test results for {username} are:\n")
+
+    #load data into a DataFrame object:
+    df = pd.DataFrame(score_dic)
+    print(df) 
+
+    print(f"\nStatistics for {username}\n")
+
+    user_speed_cpm_values = user_scoresheet.col_values(1)
+    user_speed_wpm_values = user_scoresheet.col_values(2)
+    user_accuracy_values = user_scoresheet.col_values(3)
+
+    int_speed_cpm = [eval(i) for i in user_speed_cpm_values[1:]]
+    int_speed_wpm = [eval(i) for i in user_speed_wpm_values[1:]]
+    int_accuracy = [eval(i) for i in user_accuracy_values[1:]]
+
+    avg_speed_cpm = round(mean(int_speed_cpm))
+    avg_speed_wpm = round(mean(int_speed_wpm))
+    avg_accuracy = round(mean(int_accuracy), 1)
+
+    print(f"Your average speed is {avg_speed_cpm} characters per minute\n")
+    print(f"That is approx. {avg_speed_wpm} words per minute\n")
+    print(f"Your average accuracy is {avg_accuracy}%\n")
+
+    return_to_initial_choices()
+    
+
+def return_to_initial_choices():
     ent = input("Hit enter when you are ready to continue\n")
     if ent == "":
         clear()
@@ -204,17 +241,6 @@ def save_score(speed, accuracy):
     user_scoresheet.append_row(data)
     print(f"{username} scoresheet updated successfully.\n")
 
-    print(f"Calculating Statistics for {username}\n")
-    user_speed_values = user_scoresheet.col_values(1)
-    user_accuracy_values = user_scoresheet.col_values(2)
-
-    int_speeds = [eval(i) for i in user_speed_values[1:]]
-    int_accuracy = [eval(i) for i in user_accuracy_values[1:]]
-    avg_speed = round(mean(int_speeds), 1)
-    avg_accuracy = round(mean(int_accuracy), 1)
-    print(f"Your average speed is {avg_speed} characters per minute")
-    print(f"That is approx. {avg_speed/5} words per minute")
-    print(f"Your average accuracy is {avg_accuracy}%")
 
 
 def main():
