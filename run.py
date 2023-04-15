@@ -52,31 +52,8 @@ def initial_choices():
 
     cprint("Enter the number of your choice here:\n", attrs=["bold"])
     choice = input()
-    try:
-        if choice == '1':
-            clear()
-            print_instructions()
-        elif choice == '2':
-            clear()
-            print_more_information()
-        elif choice == '3':
-            clear()
-            print_tips()
-        elif choice == '4':
-            clear()
-            see_old_scores_and_statistics()
-        elif choice == '5':
-            print("Exiting the game")
-            quit()
-        elif choice == '6':
-            clear()
-            cprint("\n*** Welcome to the Speed Typing Test! ***\n", "light_yellow")
-        else:
-            raise ValueError
-    except ValueError:
-        clear()
-        print(f"Invalid data: {choice}, please try again.\n")
-        initial_choices()
+    
+    return choice
 
 
 def print_instructions():
@@ -91,7 +68,7 @@ def print_instructions():
     print("5. Your score of accuracy and speed will then be calculated and displayed.\n")
     print("6. You will then be able to choose to exit the program or play again.\n")
 
-    return_to_initial_choices()
+    return_to_main()
 
 
 def print_more_information():
@@ -101,7 +78,7 @@ def print_more_information():
     """
     print("\nInsert text\n")
 
-    return_to_initial_choices()
+    return_to_main()
 
 
 def print_tips():
@@ -110,7 +87,51 @@ def print_tips():
     """
     print("\nInsert text\n")
 
-    return_to_initial_choices()
+    return_to_main()
+
+
+def run_test_display_results():
+    """
+    Run the typing test and display the results
+    """
+    cprint("  *** Welcome to the Speed Typing Test! ***\n", "light_yellow")
+    print("Are you ready to see your paragraph?\n")
+    ent = input("Hit enter when you are ready to continue")
+    if ent == "":
+        paragraph = generate_random_paragraph()
+        print("\n---------------------------------------\n")
+        print(paragraph)
+        print("\n---------------------------------------\n")
+    else:
+        paragraph = generate_random_paragraph()
+        print("\n---------------------------------------\n")
+        print(paragraph)
+        print("\n---------------------------------------\n")
+
+    ent = input("Hit enter when you are ready to start typing")
+    if ent == "":
+        print("\n")
+        test_results = typed_paragraph()
+        test_speed_cpm = round(test_results[1])
+        test_speed_wpm = round(test_speed_cpm / 5)
+        test_para = test_results[0]
+    else:
+        print("\n")
+        test_results = typed_paragraph()
+        test_speed_cpm = round(test_results[1])
+        test_speed_wpm = round(test_speed_cpm / 5)
+        test_para = test_results[0]
+
+    test_typing_accuracy = determine_accuracy(paragraph, test_para)
+
+    print("\n******** YOUR SCORE REPORT ********\n")
+    print(f"Typing accuracy is {test_typing_accuracy} % of characters in the paragraph.\n")
+    print(f"Speed is {test_speed_cpm} characters/minute\n")
+    print(f"that is approx. {test_speed_wpm} words/minute\n")
+
+    results = [test_speed_cpm, test_speed_wpm, test_typing_accuracy]
+
+    return results
 
 
 def see_old_scores_and_statistics():
@@ -134,7 +155,7 @@ def see_old_scores_and_statistics():
                 continue
             if choice == '2':
                 clear()
-                initial_choices()
+                main()
 
     print(f"\nThe collective test results for {username} are:\n")
     dataframe = pd.DataFrame(user_scoresheet.get_all_records())
@@ -157,17 +178,20 @@ def see_old_scores_and_statistics():
     print(f"That is approx. {avg_speed_wpm} words per minute\n")
     print(f"Your average accuracy is {avg_accuracy}%\n")
 
-    return_to_initial_choices()
+    return_to_main()
 
 
-def return_to_initial_choices():
+def return_to_main():
+    """
+    Return the user to the beginning of the test
+    """
     ent = input("Hit enter when you are ready to continue\n")
     if ent == "":
         clear()
-        initial_choices()
+        main()
     else:
         clear()
-        initial_choices()
+        main()
 
 
 def generate_random_paragraph():
@@ -198,7 +222,7 @@ def typed_paragraph():
     end_time = time.time()
 
     time_taken = end_time - start_time
-    speed = round(len(typed_para)/(time_taken/60), 1)
+    speed = len(typed_para)/(time_taken/60)
 
     results = [typed_para, speed]
 
@@ -215,20 +239,44 @@ def determine_accuracy(sent_para, typed_para):
     return result
 
 
-def save_score(speed_cpm, speed_wpm, accuracy):
+def save_score(data):
     """
     Save score to worksheet that matches the username
     """
-
-    data = [round(speed_cpm), round(speed_wpm), round(accuracy, 1)]
-    print("Enter your username:")
-    username = input()
-    print(f"Updating {username} scoresheet ...\n")
-    user_scoresheet = SHEET.worksheet(username)
-    user_scoresheet.append_row(data)
-    print(f"{username} scoresheet updated successfully.\n")
-
-    initial_choices()
+    while True:
+        try:
+            print("Enter your username:\n")
+            username = input().lower()
+            user_scoresheet = SHEET.worksheet(username)
+            print(f"Updating {username} scoresheet ...\n")
+            user_scoresheet = SHEET.worksheet(username)
+            user_scoresheet.append_row(data)
+            print(f"{username} scoresheet updated successfully.\n")
+            print("Returning to the starting page\n")
+            time.sleep(3)
+            main()
+        except gspread.exceptions.WorksheetNotFound as e:
+            print(f"Worksheet for {e} not found\n")
+            print("Would you like to:\n")
+            print("1. input a different username?\n")
+            print("2. create a worksheet to save your scores?\n")
+            print("3. return to the main menu?\n")
+            choice = input()
+            if choice == '1':
+                continue
+            elif choice == '2':
+                headings = ["speed in cpm", "speed in wpm", "accuracy"]
+                print("Enter your username:\n")
+                username = input()
+                user_scoresheet = SHEET.add_worksheet(title=username, rows=100, cols=20)
+                user_scoresheet.append_row(headings)
+                user_scoresheet.append_row(data)
+                print(f"Scoresheet for {username} has been created and updated.\n")
+                print("Returning to main menu")
+                return_to_main()
+            elif choice == '3':
+                clear()
+                main()
 
 
 def main():
@@ -236,49 +284,42 @@ def main():
     Run all program functions
     """
     clear()
+    cprint("  *** Welcome to the Speed Typing Test! ***\n", "light_yellow")
 
-    cprint("\n*** Welcome to the Speed Typing Test! ***\n", "light_yellow")
+    choice = initial_choices()
 
-    initial_choices()
-
-    print("\nAre you ready to see your paragraph?\n")
-    ent = input("Hit enter when you are ready to continue")
-    if ent == "":
-        paragraph = generate_random_paragraph()
-        print("\n---------------------------------------\n")
-        print(paragraph)
-        print("\n---------------------------------------\n")
-    else:
-        paragraph = generate_random_paragraph()
-        print("\n---------------------------------------\n")
-        print(paragraph)
-        print("\n---------------------------------------\n")
-
-    ent = input("Hit enter when you are ready to start typing")
-    if ent == "":
-        print("\n")
-        test_results = typed_paragraph()
-        test_speed_cpm = test_results[1]
-        test_speed_wpm = test_speed_cpm / 5
-        test_para = test_results[0]
-    else:
-        print("\n")
-        test_results = typed_paragraph()
-        test_speed_cpm = test_results[1]
-        test_speed_wpm = test_speed_cpm / 5
-        test_para = test_results[0]
-
-    test_typing_accuracy = determine_accuracy(paragraph, test_para)
-
-    print("\n******** YOUR SCORE REPORT ********\n")
-    print(f"Typing accuracy is {test_typing_accuracy} % of characters in the paragraph.\n")
-    print(f"Speed is {round(test_speed_cpm)} characters/minute\n")
-    print(f"that is approx. {round(test_speed_wpm)} words/minute\n")
+    try:
+        if choice == '1':
+            clear()
+            print_instructions()
+        elif choice == '2':
+            clear()
+            print_more_information()
+        elif choice == '3':
+            clear()
+            print_tips()
+        elif choice == '4':
+            clear()
+            see_old_scores_and_statistics()
+        elif choice == '5':
+            print("Exiting the game")
+            quit()
+        elif choice == '6':
+            clear()
+            test_scores = run_test_display_results()
+        else:
+            raise ValueError
+    except ValueError:
+        clear()
+        print(f"Invalid data: {choice}, please try again.\n")
+        print("Returning to the starting page\n")
+        time.sleep(3)
+        main()
 
     print("\n **** What next? **** \n")
-    print("1. Exit\n")
-    print("2. Test again\n")
-    print("3. Save results\n")
+    print("1. Exit the program.\n")
+    print("2. Return to main menu.\n")
+    print("3. Save results.\n")
     now_what = input()
     if now_what == '1':
         print("\nThanks for taking the test! Come back soon!\n")
@@ -286,7 +327,7 @@ def main():
     elif now_what == '2':
         main()
     elif now_what == '3':
-        save_score(test_speed_cpm, test_speed_wpm, test_typing_accuracy)
+        save_score(test_scores)
         main()
     else:
         print("Invalid input. Exiting the game")
