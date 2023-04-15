@@ -24,11 +24,6 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('typing-tests')
 
-# tests = SHEET.worksheet('tests')
-
-# data = tests.get_all_values()
-# print(data)
-
 
 def clear():
     """
@@ -95,7 +90,7 @@ def print_instructions():
     print("4. Hit enter when you are done typing.\n")
     print("5. Your score of accuracy and speed will then be calculated and displayed.\n")
     print("6. You will then be able to choose to exit the program or play again.\n")
-    
+
     return_to_initial_choices()
 
 
@@ -123,20 +118,27 @@ def see_old_scores_and_statistics():
     Access google sheet with old scores and display scores and statistics
     in the terminal window
     """
-    print("Enter your username:\n")
-    username = input()
-    user_scoresheet = SHEET.worksheet(username)
-    score_keys = user_scoresheet.row_values(1)
-    list_scores = [user_scoresheet.col_values(i)[1:] for i in range(1,4)]
-    score_dic = dict(zip(score_keys, list_scores))
+    while True:
+        try:
+            print("Enter your username:\n")
+            username = input().lower()
+            user_scoresheet = SHEET.worksheet(username)
+            break
+        except gspread.exceptions.WorksheetNotFound as e:
+            print(f"Worksheet for {e} not found\n")
+            print("Would you like to:\n")
+            print("1. enter a different username or\n")
+            print("2. return to the previous screen?\n")
+            choice = input()
+            if choice == '1':
+                continue
+            if choice == '2':
+                clear()
+                initial_choices()
 
     print(f"\nThe collective test results for {username} are:\n")
-
-    #load data into a DataFrame object:
-    df = pd.DataFrame(score_dic)
-    print(df) 
-
-    print(f"\nStatistics for {username}\n")
+    dataframe = pd.DataFrame(user_scoresheet.get_all_records())
+    print(dataframe)
 
     user_speed_cpm_values = user_scoresheet.col_values(1)
     user_speed_wpm_values = user_scoresheet.col_values(2)
@@ -150,12 +152,13 @@ def see_old_scores_and_statistics():
     avg_speed_wpm = round(mean(int_speed_wpm))
     avg_accuracy = round(mean(int_accuracy), 1)
 
+    print(f"\nStatistics for {username}\n")
     print(f"Your average speed is {avg_speed_cpm} characters per minute\n")
     print(f"That is approx. {avg_speed_wpm} words per minute\n")
     print(f"Your average accuracy is {avg_accuracy}%\n")
 
     return_to_initial_choices()
-    
+
 
 def return_to_initial_choices():
     ent = input("Hit enter when you are ready to continue\n")
@@ -202,38 +205,22 @@ def typed_paragraph():
     return results
 
 
-def error_rate(sent_para, typed_para):
+def determine_accuracy(sent_para, typed_para):
     """
-    Error rate is computed as a percentage of the length of the paragraph
+    Accuracy is determined using SequenceMatcher
     """
-    # error_count = 0
-    # print(sent_para)
-    # length = len(sent_para) - 1
+    sequence_match = SequenceMatcher(a=sent_para, b=typed_para).ratio()
+    result = round(100 * sequence_match, 1)
 
-    sequence_match = round(100 * SequenceMatcher(a=sent_para, b=typed_para).ratio(), 1)
-    # for character in range(length):
-    #     try:
-    #         if sent_para[character] != typed_para[character]:
-    #             error_count += 1
-    #         else:
-    #             continue
-    #     except:
-    #         error_count += 1
-
-    # error_percent = error_count/length * 100
-    # typing_accuracy = 100 - error_percent
-
-    # accuracy = [typing_accuracy, sequence_match]
-
-    return sequence_match
+    return result
 
 
-def save_score(speed, accuracy):
+def save_score(speed_cpm, speed_wpm, accuracy):
     """
     Save score to worksheet that matches the username
     """
 
-    data = [speed, accuracy]
+    data = [round(speed_cpm), round(speed_wpm), round(accuracy, 1)]
     print("Enter your username:")
     username = input()
     print(f"Updating {username} scoresheet ...\n")
@@ -241,6 +228,7 @@ def save_score(speed, accuracy):
     user_scoresheet.append_row(data)
     print(f"{username} scoresheet updated successfully.\n")
 
+    initial_choices()
 
 
 def main():
@@ -270,35 +258,36 @@ def main():
     if ent == "":
         print("\n")
         test_results = typed_paragraph()
-        test_speed = test_results[1]
+        test_speed_cpm = test_results[1]
+        test_speed_wpm = test_speed_cpm / 5
         test_para = test_results[0]
     else:
         print("\n")
         test_results = typed_paragraph()
-        test_speed = test_results[1]
+        test_speed_cpm = test_results[1]
+        test_speed_wpm = test_speed_cpm / 5
         test_para = test_results[0]
 
-    test_typing_accuracy = error_rate(paragraph, test_para)
+    test_typing_accuracy = determine_accuracy(paragraph, test_para)
 
     print("\n******** YOUR SCORE REPORT ********\n")
-    # print(f"Typing accuracy is {round(test_typing_accuracy[0],1)} % of characters in the paragraph.\n")
     print(f"Typing accuracy is {test_typing_accuracy} % of characters in the paragraph.\n")
-    print(f"Speed is {test_speed} characters/minute\n")
-    print(f"that is approx. {test_speed/5} words/minute\n")
+    print(f"Speed is {round(test_speed_cpm)} characters/minute\n")
+    print(f"that is approx. {round(test_speed_wpm)} words/minute\n")
 
     print("\n **** What next? **** \n")
-    print("1. Exit (e)\n")
-    print("2. Test again (t)\n")
-    print("3. Save results and display statistics (s)\n")
+    print("1. Exit\n")
+    print("2. Test again\n")
+    print("3. Save results\n")
     now_what = input()
-    if now_what == 'e':
+    if now_what == '1':
         print("\nThanks for taking the test! Come back soon!\n")
         quit()
-    elif now_what == 't':
+    elif now_what == '2':
         main()
-    elif now_what == 's':
-        save_score(test_speed, test_typing_accuracy)
-        quit()
+    elif now_what == '3':
+        save_score(test_speed_cpm, test_speed_wpm, test_typing_accuracy)
+        main()
     else:
         print("Invalid input. Exiting the game")
         quit()
