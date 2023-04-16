@@ -36,6 +36,8 @@ def clear():
     else:
         _ = system('clear')
 
+    cprint("  *** Welcome to the Speed Typing Test! ***\n", "light_yellow")
+
 
 def return_to_main():
     """
@@ -120,13 +122,13 @@ def see_old_scores_and_statistics():
             print(f"Worksheet for {e} not found\n")
             print("Would you like to:\n")
             print("1. enter a different username or\n")
-            print("2. return to the previous screen?\n")
+            print("2. return to the main menu?\n")
             choice = input()
             if choice == '1':
                 continue
             if choice == '2':
                 clear()
-                main()
+                return_to_main()
 
     print(f"\nThe collective test results for {username} are:\n")
     dataframe = pd.DataFrame(user_scoresheet.get_all_records())
@@ -157,7 +159,7 @@ def create_user_score_sheet():
     Create a google spread sheet to save scores for a new user
     """
     headings = ["speed in cpm", "speed in wpm", "accuracy"]
-    print("Enter your username:\n")
+    print("Enter your username for a new score sheet:\n")
     username = input().lower()
     try:
         user_scoresheet = SHEET.worksheet(username)
@@ -178,7 +180,6 @@ def create_user_score_sheet():
         user_scoresheet.append_row(headings)
         print(f"Scoresheet for {username} has been created.\n")
         print("It can now be used to save scores of the test.\n")
-        print("Returning to main menu")
         return_to_main()
 
 
@@ -188,24 +189,28 @@ def delete_score_sheet():
     """
     while True:
         try:
-            print("Enter your username:\n")
+            print("Enter username for the scoresheet you want to delete:\n")
             username = input().lower()
+            if username == 'test':
+                print(f"The score sheet '{username}' cannot be deleted\n")
+                return_to_main()
             user_scoresheet = SHEET.worksheet(username)
-            print(f"\nA sheet with the name {username} exist.\n")
-            print("Are you sure want to delete is?\n")
-            print("Type 'yes' if are ready to delete the sheet,\n")
-            print("type 'no' if you do not want to delete it and return to main menu.")
-            choice = input()
-            if choice == 'yes':
-                SHEET.del_worksheet(user_scoresheet)
-                print("The sheet has been deleted")
-                return_to_main()
-            elif choice == 'no':
-                return_to_main()
-            else:
-                clear()
-                print("Your input was invalid. Please try again")
-                continue
+            while True:
+                print(f"\nA sheet with the name '{username}' exist.\n")
+                print("Are you sure want to delete is?\n")
+                print("Type 'yes' if are ready to delete the sheet,\n")
+                print("type 'no' if you do not want to delete it and return to main menu.")
+                choice = input()
+                if choice == 'yes':
+                    SHEET.del_worksheet(user_scoresheet)
+                    print(f"The sheet '{username}' has been deleted")
+                    return_to_main()
+                elif choice == 'no':
+                    return_to_main()
+                else:
+                    clear()
+                    print("Your input was invalid. Please try again")
+                    continue
         except gspread.exceptions.WorksheetNotFound:
             while True:
                 print(f"A score sheet with the name {username} does not exist.\n")
@@ -229,7 +234,6 @@ def run_test_display_results():
     """
     Run the typing test and display the results
     """
-    cprint("  *** Welcome to the Speed Typing Test! ***\n", "light_yellow")
     print("Are you ready to see your paragraph?\n")
     ent = input("Hit enter when you are ready to continue")
     if ent == "":
@@ -327,11 +331,9 @@ def save_score(data):
             user_scoresheet = SHEET.worksheet(username)
             user_scoresheet.append_row(data)
             print(f"{username} scoresheet updated successfully.\n")
-            print("Returning to the starting page\n")
-            time.sleep(3)
-            main()
-        except gspread.exceptions.WorksheetNotFound as e:
-            print(f"Worksheet for {e} not found\n")
+            return_to_main()
+        except gspread.exceptions.WorksheetNotFound:
+            print(f"Worksheet for '{username}' not found\n")
             print("Would you like to:\n")
             print("1. input a different username?\n")
             print("2. create a worksheet to save your scores?\n")
@@ -358,7 +360,6 @@ def main():
     Run all program functions
     """
     clear()
-    cprint("  *** Welcome to the Speed Typing Test! ***\n", "light_yellow")
 
     choice = initial_choices()
 
