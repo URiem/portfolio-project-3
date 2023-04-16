@@ -52,19 +52,19 @@ def return_to_main():
         main()
 
 
-def initial_choices():
+def main_menu():
     """
     Allows the user several choices to display various information,
     exit or start the game.
     """
-    cprint("\nMain Menu: What would you like to do?\n", attrs=["underline"])
+    cprint("Main Menu: What would you like to do?\n", attrs=["underline", "bold"])
     print("1. Read the test instructions.\n")
     print("2. Learn more about typical typing speeds.\n")
     print("3. Get tips on how to improve your score.\n")
     print("4. See your old scores and statistics.\n")
     print("5. Create a username to save results.\n")
     print("6. Delete a username and scoresheet.\n")
-    print("7. Exit the game.\n")
+    print("7. Exit the program.\n")
     print("8. Start the test.\n")
 
     cprint("Enter the number of your choice here:\n", attrs=["bold"])
@@ -77,13 +77,14 @@ def print_instructions():
     """
     Prints the instruction for the Speed Test
     """
-    print("\n -- Instructions -- \n")
-    print("1. Read and follow prompts closely as you navigate through the program.\n")
-    print("2. When you are ready the program generates a paragraph of short random sentences.\n")
-    print("3. When you are ready type the provided paragraph as quickly and accurately as possible.\n")
-    print("4. Hit enter when you are done typing.\n")
-    print("5. Your score of accuracy and speed will then be calculated and displayed.\n")
-    print("6. You will then be able to choose to exit the program or play again.\n")
+    cprint("\nInstructions\n", attrs=["underline", "bold"])
+    print("* Read and follow prompts closely as you navigate through the program.\n")
+    print("* When you encounter a choice menu, make sure to enter a valid choice.\n")
+    print("* When you are ready to take the test, the program generates a paragraph of short random sentences.\n")
+    print("* When you are ready, type the provided paragraph as quickly and accurately as possible.\n")
+    print("* Hit enter when you are done typing.\n")
+    print("* Your scores, including accuracy and speed will then be calculated and displayed.\n")
+    print("* You will then be able to choose to save your score or return to the main menu.\n")
 
     return_to_main()
 
@@ -93,7 +94,18 @@ def print_more_information():
     Print general information on average typing speeds and
     other useful or interesting information
     """
-    print("\nInsert text\n")
+    cprint("\nDid you know?\n", attrs=["underline", "bold"])
+    print("The QWERTY keyboard layout is standard on nearly every keyboard\n")
+    print("and phone in the English-speaking world. Currently, the average typing\n")
+    print("speed on a QWERTY layout for an adult who uses typing for their job\n")
+    print("is around 40 WPM. Touch typists using the home-row method are typically\n")
+    print("faster typists because they don’t look down at the keyboard and\n")
+    print("type from muscle memory. Hunt and peck typists typically use two-fingers\n")
+    print("and look at the keys as they type, so it takes them longer to find the letters.\n")  
+    print("\nOfficially, the fastest typist in the world is Barbara Blackburn,\n")
+    print("who has reached top speeds of 212 wpm on a Dvorak keyboard. She was able\n")
+    print("to maintain a speed of 150 wpm for 50 minutes. Barbara has held this\n")
+    print("record since 2005.\n")
 
     return_to_main()
 
@@ -102,7 +114,12 @@ def print_tips():
     """
     Print on how to improve typing speed and accuracy
     """
-    print("\nInsert text\n")
+    cprint("\nHow can you improve?\n", attrs=["underline", "bold"])
+    print("* Familiarize yourself with the keyboard and proper hand position.\n")
+    print("* Learn proper overall positioning of the screen and your body.\n")
+    print("* Start by typing slowly to avoid mistakes.\n")
+    print("* Practice, practice, practice.\n")
+    print("* Go to the internet to find more detailed advice.\n")
 
     return_to_main()
 
@@ -114,23 +131,28 @@ def see_old_scores_and_statistics():
     """
     while True:
         try:
-            print("Enter your username:\n")
+            print("Enter your username to see your scores and statistics:\n")
             username = input().lower()
             user_scoresheet = SHEET.worksheet(username)
             break
-        except gspread.exceptions.WorksheetNotFound as e:
-            print(f"Worksheet for {e} not found\n")
-            print("Would you like to:\n")
-            print("1. enter a different username or\n")
-            print("2. return to the main menu?\n")
-            choice = input()
-            if choice == '1':
-                continue
-            if choice == '2':
-                clear()
-                return_to_main()
+        except gspread.exceptions.WorksheetNotFound:
+            while True:
+                print(f"Worksheet for '{username}' not found\n")
+                print("Would you like to:\n")
+                print("1. enter a different username or\n")
+                print("2. return to the main menu?\n")
+                choice = input()
+                if choice == '1':
+                    see_old_scores_and_statistics()
+                elif choice == '2':
+                    return_to_main()
+                else:
+                    print("Your input is invalid. Please try again.\n")
+                    continue
 
-    print(f"\nThe collective test results for {username} are:\n")
+
+
+    print(f"\nThe collective test results for '{username}' are:\n")
     dataframe = pd.DataFrame(user_scoresheet.get_all_records())
     print(dataframe)
 
@@ -146,7 +168,7 @@ def see_old_scores_and_statistics():
     avg_speed_wpm = round(mean(int_speed_wpm))
     avg_accuracy = round(mean(int_accuracy), 1)
 
-    print(f"\nStatistics for {username}\n")
+    print(f"\nStatistics for '{username}'\n")
     print(f"Your average speed is {avg_speed_cpm} characters per minute\n")
     print(f"That is approx. {avg_speed_wpm} words per minute\n")
     print(f"Your average accuracy is {avg_accuracy}%\n")
@@ -178,7 +200,7 @@ def create_user_score_sheet():
     except gspread.exceptions.WorksheetNotFound:
         user_scoresheet = SHEET.add_worksheet(title=username, rows=100, cols=20)
         user_scoresheet.append_row(headings)
-        print(f"Scoresheet for {username} has been created.\n")
+        print(f"Scoresheet for '{username}' has been created.\n")
         print("It can now be used to save scores of the test.\n")
         return_to_main()
 
@@ -213,7 +235,7 @@ def delete_score_sheet():
                     continue
         except gspread.exceptions.WorksheetNotFound:
             while True:
-                print(f"A score sheet with the name {username} does not exist.\n")
+                print(f"A score sheet with the name '{username}' does not exist.\n")
                 print("Do you want to:\n")
                 print("1. Enter another username?\n")
                 print("2. Return to the main menu?\n")
@@ -327,10 +349,10 @@ def save_score(data):
             print("Enter your username:\n")
             username = input().lower()
             user_scoresheet = SHEET.worksheet(username)
-            print(f"Updating {username} scoresheet ...\n")
+            print(f"Updating '{username}' scoresheet ...\n")
             user_scoresheet = SHEET.worksheet(username)
             user_scoresheet.append_row(data)
-            print(f"{username} scoresheet updated successfully.\n")
+            print(f"'{username}' scoresheet updated successfully.\n")
             return_to_main()
         except gspread.exceptions.WorksheetNotFound:
             print(f"Worksheet for '{username}' not found\n")
@@ -343,13 +365,12 @@ def save_score(data):
                 continue
             elif choice == '2':
                 headings = ["speed in cpm", "speed in wpm", "accuracy"]
-                print("Enter your username:\n")
-                username = input()
+                # print("Enter your username:\n")
+                # username = input().lower()
                 user_scoresheet = SHEET.add_worksheet(title=username, rows=100, cols=20)
                 user_scoresheet.append_row(headings)
                 user_scoresheet.append_row(data)
-                print(f"Scoresheet for {username} has been created and updated.\n")
-                print("Returning to main menu")
+                print(f"Scoresheet for '{username}' has been created and updated.\n")
                 return_to_main()
             elif choice == '3':
                 return_to_main()
@@ -361,7 +382,7 @@ def main():
     """
     clear()
 
-    choice = initial_choices()
+    choice = main_menu()
 
     try:
         if choice == '1':
@@ -391,28 +412,26 @@ def main():
         else:
             raise ValueError
     except ValueError:
-        clear()
         print(f"Invalid data: {choice}, please try again.\n")
-        print("Returning to the starting page\n")
-        time.sleep(3)
-        main()
+        return_to_main()
+
 
     print("\n **** What next? **** \n")
-    print("1. Exit the program.\n")
+    print("1. Save results.\n")
     print("2. Return to main menu.\n")
-    print("3. Save results.\n")
     now_what = input()
-    if now_what == '1':
-        print("\nThanks for taking the test! Come back soon!\n")
-        quit()
-    elif now_what == '2':
-        main()
-    elif now_what == '3':
-        save_score(test_scores)
-        main()
-    else:
-        print("Invalid input. Exiting the game")
-        quit()
+    while True:
+        try:
+            if now_what == '1':
+                save_score(test_scores)
+                return_to_main()
+            elif now_what == '2':
+                return_to_main()
+            else:
+                raise ValueError
+        except ValueError:
+            print("Your input was invalid. Please try again.")
+            continue
 
 
 main()
