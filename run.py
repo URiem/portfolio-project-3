@@ -37,18 +37,33 @@ def clear():
         _ = system('clear')
 
 
+def return_to_main():
+    """
+    Return the user to the beginning of the program
+    """
+    ent = input("\nHit enter when you are ready to return to the main menu.\n")
+    if ent == "":
+        clear()
+        main()
+    else:
+        clear()
+        main()
+
+
 def initial_choices():
     """
     Allows the user several choices to display various information,
     exit or start the game.
     """
-    cprint("\nWhat would you like to do?\n", attrs=["underline"])
+    cprint("\nMain Menu: What would you like to do?\n", attrs=["underline"])
     print("1. Read the test instructions.\n")
     print("2. Learn more about typical typing speeds.\n")
     print("3. Get tips on how to improve your score.\n")
     print("4. See your old scores and statistics.\n")
-    print("5. Exit the game.\n")
-    print("6. Start the test.\n")
+    print("5. Create a username to save results.\n")
+    print("6. Delete a username and scoresheet.\n")
+    print("7. Exit the game.\n")
+    print("8. Start the test.\n")
 
     cprint("Enter the number of your choice here:\n", attrs=["bold"])
     choice = input()
@@ -88,50 +103,6 @@ def print_tips():
     print("\nInsert text\n")
 
     return_to_main()
-
-
-def run_test_display_results():
-    """
-    Run the typing test and display the results
-    """
-    cprint("  *** Welcome to the Speed Typing Test! ***\n", "light_yellow")
-    print("Are you ready to see your paragraph?\n")
-    ent = input("Hit enter when you are ready to continue")
-    if ent == "":
-        paragraph = generate_random_paragraph()
-        print("\n---------------------------------------\n")
-        print(paragraph)
-        print("\n---------------------------------------\n")
-    else:
-        paragraph = generate_random_paragraph()
-        print("\n---------------------------------------\n")
-        print(paragraph)
-        print("\n---------------------------------------\n")
-
-    ent = input("Hit enter when you are ready to start typing")
-    if ent == "":
-        print("\n")
-        test_results = typed_paragraph()
-        test_speed_cpm = round(test_results[1])
-        test_speed_wpm = round(test_speed_cpm / 5)
-        test_para = test_results[0]
-    else:
-        print("\n")
-        test_results = typed_paragraph()
-        test_speed_cpm = round(test_results[1])
-        test_speed_wpm = round(test_speed_cpm / 5)
-        test_para = test_results[0]
-
-    test_typing_accuracy = determine_accuracy(paragraph, test_para)
-
-    print("\n******** YOUR SCORE REPORT ********\n")
-    print(f"Typing accuracy is {test_typing_accuracy} % of characters in the paragraph.\n")
-    print(f"Speed is {test_speed_cpm} characters/minute\n")
-    print(f"that is approx. {test_speed_wpm} words/minute\n")
-
-    results = [test_speed_cpm, test_speed_wpm, test_typing_accuracy]
-
-    return results
 
 
 def see_old_scores_and_statistics():
@@ -181,17 +152,121 @@ def see_old_scores_and_statistics():
     return_to_main()
 
 
-def return_to_main():
+def create_user_score_sheet():
     """
-    Return the user to the beginning of the test
+    Create a google spread sheet to save scores for a new user
     """
-    ent = input("Hit enter when you are ready to continue\n")
+    headings = ["speed in cpm", "speed in wpm", "accuracy"]
+    print("Enter your username:\n")
+    username = input().lower()
+    try:
+        user_scoresheet = SHEET.worksheet(username)
+        print("A sheet with this username already exist.\n")
+        print("Do you you want to:\n")
+        print("1. Choose a differnt username?\n")
+        print("2. Return to main menu and record data to existing sheet?\n")
+        print("Enter the number of your choice:\n")
+        choice = input()
+        if choice == '1':
+            clear()
+            create_user_score_sheet()
+        elif choice == '2':
+            clear()
+            main()
+    except gspread.exceptions.WorksheetNotFound:
+        user_scoresheet = SHEET.add_worksheet(title=username, rows=100, cols=20)
+        user_scoresheet.append_row(headings)
+        print(f"Scoresheet for {username} has been created.\n")
+        print("It can now be used to save scores of the test.\n")
+        print("Returning to main menu")
+        return_to_main()
+
+
+def delete_score_sheet():
+    """
+    Delete a user score sheet
+    """
+    while True:
+        try:
+            print("Enter your username:\n")
+            username = input().lower()
+            user_scoresheet = SHEET.worksheet(username)
+            print(f"\nA sheet with the name {username} exist.\n")
+            print("Are you sure want to delete is?\n")
+            print("Type 'yes' if are ready to delete the sheet,\n")
+            print("type 'no' if you do not want to delete it and return to main menu.")
+            choice = input()
+            if choice == 'yes':
+                SHEET.del_worksheet(user_scoresheet)
+                print("The sheet has been deleted")
+                return_to_main()
+            elif choice == 'no':
+                return_to_main()
+            else:
+                clear()
+                print("Your input was invalid. Please try again")
+                continue
+        except gspread.exceptions.WorksheetNotFound:
+            while True:
+                print(f"A score sheet with the name {username} does not exist.\n")
+                print("Do you want to:\n")
+                print("1. Enter another username?\n")
+                print("2. Return to the main menu?\n")
+                print("Enter the number of your choice:\n")
+                choice = input()
+                if choice == '1':
+                    clear()
+                    delete_score_sheet()
+                elif choice == '2':
+                    return_to_main()
+                else:
+                    clear()
+                    print("Your input was invalid. Please try again")
+                    continue
+
+
+def run_test_display_results():
+    """
+    Run the typing test and display the results
+    """
+    cprint("  *** Welcome to the Speed Typing Test! ***\n", "light_yellow")
+    print("Are you ready to see your paragraph?\n")
+    ent = input("Hit enter when you are ready to continue")
     if ent == "":
-        clear()
-        main()
+        paragraph = generate_random_paragraph()
+        print("\n---------------------------------------\n")
+        print(paragraph)
+        print("\n---------------------------------------\n")
     else:
-        clear()
-        main()
+        paragraph = generate_random_paragraph()
+        print("\n---------------------------------------\n")
+        print(paragraph)
+        print("\n---------------------------------------\n")
+
+    ent = input("Hit enter when you are ready to start typing")
+    if ent == "":
+        print("\n")
+        test_results = typed_paragraph()
+        test_speed_cpm = round(test_results[1])
+        test_speed_wpm = round(test_speed_cpm / 5)
+        test_para = test_results[0]
+    else:
+        print("\n")
+        test_results = typed_paragraph()
+        test_speed_cpm = round(test_results[1])
+        test_speed_wpm = round(test_speed_cpm / 5)
+        test_para = test_results[0]
+
+    test_typing_accuracy = determine_accuracy(paragraph, test_para)
+
+    print("\n******** YOUR SCORE REPORT ********\n")
+    print(f"Typing accuracy is {test_typing_accuracy} % of characters in the paragraph.\n")
+    print(f"Speed is {test_speed_cpm} characters/minute\n")
+    print(f"that is approx. {test_speed_wpm} words/minute\n")
+
+    results = [test_speed_cpm, test_speed_wpm, test_typing_accuracy]
+
+    return results
 
 
 def generate_random_paragraph():
@@ -275,8 +350,7 @@ def save_score(data):
                 print("Returning to main menu")
                 return_to_main()
             elif choice == '3':
-                clear()
-                main()
+                return_to_main()
 
 
 def main():
@@ -302,9 +376,15 @@ def main():
             clear()
             see_old_scores_and_statistics()
         elif choice == '5':
+            clear()
+            create_user_score_sheet()
+        elif choice == '6':
+            clear()
+            delete_score_sheet()
+        elif choice == '7':
             print("Exiting the game")
             quit()
-        elif choice == '6':
+        elif choice == '8':
             clear()
             test_scores = run_test_display_results()
         else:
