@@ -36,14 +36,15 @@ def clear():
     else:
         _ = system('clear')
 
-    cprint("  *** Welcome to the Speed Typing Test! ***\n", "light_yellow")
+    cprint("*** Welcome to the Speed Typing Test! ***\n", "light_yellow")
 
 
 def return_to_main():
     """
     Return the user to the beginning of the program
     """
-    ent = input("\nHit enter when you are ready to return to the main menu.\n")
+    cprint("\nHit enter when you are ready to return to the main menu.\n", "green", attrs=["bold"])
+    ent = input()
     if ent == "":
         clear()
         main()
@@ -67,7 +68,7 @@ def main_menu():
     print("7. Exit the program.\n")
     print("8. Start the test.\n")
 
-    cprint("Enter the number of your choice here:\n", attrs=["bold"])
+    cprint("Enter the number of your choice here:\n", "green", attrs=["bold"])
     choice = input()
     
     return choice
@@ -131,28 +132,30 @@ def see_old_scores_and_statistics():
     """
     while True:
         try:
-            print("Enter your username to see your scores and statistics:\n")
+            cprint("Enter your username to see your scores and statistics:\n", "green", attrs=["bold"])
             username = input().lower()
             user_scoresheet = SHEET.worksheet(username)
             break
         except gspread.exceptions.WorksheetNotFound:
             while True:
-                print(f"Worksheet for '{username}' not found\n")
-                print("Would you like to:\n")
+                print(f"\nWorksheet for '{username}' not found\n")
+                cprint("Would you like to:\n", attrs=["bold", "underline"])
                 print("1. enter a different username or\n")
                 print("2. return to the main menu?\n")
+                cprint("Please enter your numeric choice:\n", "green", attrs=["bold"])
                 choice = input()
                 if choice == '1':
+                    clear()
                     see_old_scores_and_statistics()
                 elif choice == '2':
                     return_to_main()
                 else:
-                    print("Your input is invalid. Please try again.\n")
+                    cprint("\nYour input is invalid. Please try again.\n", "red", attrs=["bold"])
                     continue
 
 
 
-    print(f"\nThe collective test results for '{username}' are:\n")
+    cprint(f"\nThe collective test results for '{username}' are:\n", attrs=["bold", "underline"])
     dataframe = pd.DataFrame(user_scoresheet.get_all_records())
     print(dataframe)
 
@@ -168,7 +171,7 @@ def see_old_scores_and_statistics():
     avg_speed_wpm = round(mean(int_speed_wpm))
     avg_accuracy = round(mean(int_accuracy), 1)
 
-    print(f"\nStatistics for '{username}'\n")
+    cprint(f"\nStatistics for '{username}'\n", attrs=["bold", "underline"])
     print(f"Your average speed is {avg_speed_cpm} characters per minute\n")
     print(f"That is approx. {avg_speed_wpm} words per minute\n")
     print(f"Your average accuracy is {avg_accuracy}%\n")
@@ -181,15 +184,15 @@ def create_user_score_sheet():
     Create a google spread sheet to save scores for a new user
     """
     headings = ["speed in cpm", "speed in wpm", "accuracy"]
-    print("Enter your username for a new score sheet:\n")
+    cprint("Enter your username for a new score sheet:\n", "green", attrs=["bold"])
     username = input().lower()
     try:
         user_scoresheet = SHEET.worksheet(username)
-        print("A sheet with this username already exist.\n")
-        print("Do you you want to:\n")
+        cprint(f"\nA sheet with the name {username} already exist.\n", attrs=["bold", "underline"])
+        cprint("Do you you want to:\n", attrs=["bold", "underline"])
         print("1. Choose a differnt username?\n")
         print("2. Return to main menu and record data to existing sheet?\n")
-        print("Enter the number of your choice:\n")
+        cprint("Enter your numeric choice:\n", "green", attrs=["bold"])
         choice = input()
         if choice == '1':
             clear()
@@ -200,7 +203,7 @@ def create_user_score_sheet():
     except gspread.exceptions.WorksheetNotFound:
         user_scoresheet = SHEET.add_worksheet(title=username, rows=100, cols=20)
         user_scoresheet.append_row(headings)
-        print(f"Scoresheet for '{username}' has been created.\n")
+        cprint(f"\nScoresheet for '{username}' has been created.\n", attrs=["bold", "underline"])
         print("It can now be used to save scores of the test.\n")
         return_to_main()
 
@@ -211,27 +214,27 @@ def delete_score_sheet():
     """
     while True:
         try:
-            print("Enter username for the scoresheet you want to delete:\n")
+            cprint("Enter username for the scoresheet you want to delete:\n", "green", attrs=["bold"])
             username = input().lower()
             if username == 'test':
                 print(f"The score sheet '{username}' cannot be deleted\n")
                 return_to_main()
             user_scoresheet = SHEET.worksheet(username)
             while True:
-                print(f"\nA sheet with the name '{username}' exist.\n")
-                print("Are you sure want to delete is?\n")
-                print("Type 'yes' if are ready to delete the sheet,\n")
-                print("type 'no' if you do not want to delete it and return to main menu.")
+                cprint(f"\nA sheet with the name '{username}' exist.\n", attrs=["bold", "underline"])
+                cprint("Are you sure want to delete it?\n", attrs=["bold", "underline"])
+                cprint("Type 'yes' if are ready to delete the sheet,\n", "green")
+                cprint("type 'no' if you do not want to delete it and return to main menu.\n", "green")
                 choice = input()
                 if choice == 'yes':
                     SHEET.del_worksheet(user_scoresheet)
-                    print(f"The sheet '{username}' has been deleted")
+                    cprint(f"\nThe sheet '{username}' has been deleted", attrs=["bold", "underline"])
                     return_to_main()
                 elif choice == 'no':
                     return_to_main()
                 else:
                     clear()
-                    print("Your input was invalid. Please try again")
+                    cprint("Your input was invalid. Please try again", "red", attrs=["bold"])
                     continue
         except gspread.exceptions.WorksheetNotFound:
             while True:
@@ -248,7 +251,7 @@ def delete_score_sheet():
                     return_to_main()
                 else:
                     clear()
-                    print("Your input was invalid. Please try again")
+                    cprint("Your input was invalid. Please try again", "red", attrs=["bold"])
                     continue
 
 
@@ -256,20 +259,20 @@ def run_test_display_results():
     """
     Run the typing test and display the results
     """
-    print("Are you ready to see your paragraph?\n")
-    ent = input("Hit enter when you are ready to continue")
+    # cprint("Are you ready to see your paragraph?\n", attrs=["bold", "underline"])
+    ent = input(colored("Hit enter when you are ready to see the paragraph.", "green", attrs=["bold"]))
     if ent == "":
         paragraph = generate_random_paragraph()
-        print("\n---------------------------------------\n")
-        print(paragraph)
-        print("\n---------------------------------------\n")
+        cprint("\n***********************************************\n", attrs=["bold"])
+        cprint(paragraph, "white", attrs=["bold"])
+        cprint("\n***********************************************\n", attrs=["bold"])
     else:
         paragraph = generate_random_paragraph()
-        print("\n---------------------------------------\n")
-        print(paragraph)
-        print("\n---------------------------------------\n")
+        cprint("***********************************************\n", attrs=["bold"])
+        cprint(paragraph, "white", attrs=["bold"])
+        cprint("\n***********************************************\n", attrs=["bold"])
 
-    ent = input("Hit enter when you are ready to start typing")
+    ent = input(colored("Hit enter when you are ready to start typing.", "green", attrs=["bold"]))
     if ent == "":
         print("\n")
         test_results = typed_paragraph()
@@ -285,12 +288,13 @@ def run_test_display_results():
 
     test_typing_accuracy = determine_accuracy(paragraph, test_para)
 
-    print("\n******** YOUR SCORE REPORT ********\n")
-    print(f"Typing accuracy is {test_typing_accuracy} % of characters in the paragraph.\n")
-    print(f"Speed is {test_speed_cpm} characters/minute\n")
-    print(f"that is approx. {test_speed_wpm} words/minute\n")
+    cprint("\n******** YOUR SCORE REPORT ********\n", "yellow")
+    cprint(f"Typing accuracy is {test_typing_accuracy} % of characters in the paragraph.\n", attrs=["bold"])
+    cprint(f"Speed is {test_speed_cpm} characters/minute\n", attrs=["bold"])
+    cprint(f"that is approx. {test_speed_wpm} words/minute\n", attrs=["bold"])
 
     results = [test_speed_cpm, test_speed_wpm, test_typing_accuracy]
+
 
     return results
 
@@ -339,6 +343,29 @@ def determine_accuracy(sent_para, typed_para):
 
     return result
 
+def post_test_choice(data):
+    """
+    User gets a choice to save the data or return to the main menu
+    """
+    cprint("\nWhat next?\n", attrs=["bold", "underline"])
+    print("1. Save results.\n")
+    print("2. Return to main menu.\n")
+    cprint("Please enter your numeric choice:\n", "green", attrs=["bold"])
+    now_what = input()
+    while True:
+        try:
+            if now_what == '1':
+                save_score(data)
+                return_to_main()
+            elif now_what == '2':
+                return_to_main()
+            else:
+                raise ValueError
+        except ValueError:
+            cprint("\nYour input was invalid. Please try again.\n", "red", attrs=["bold"])
+            post_test_choice(data)
+
+
 
 def save_score(data):
     """
@@ -346,34 +373,38 @@ def save_score(data):
     """
     while True:
         try:
-            print("Enter your username:\n")
+            cprint("\nEnter your username to save the score:\n", "green", attrs=["bold"])
             username = input().lower()
             user_scoresheet = SHEET.worksheet(username)
-            print(f"Updating '{username}' scoresheet ...\n")
+            print(f"\nUpdating '{username}' scoresheet ...\n")
             user_scoresheet = SHEET.worksheet(username)
             user_scoresheet.append_row(data)
-            print(f"'{username}' scoresheet updated successfully.\n")
+            cprint(f"'{username}' scoresheet updated successfully.\n", attrs=["bold", "underline"])
             return_to_main()
         except gspread.exceptions.WorksheetNotFound:
-            print(f"Worksheet for '{username}' not found\n")
-            print("Would you like to:\n")
-            print("1. input a different username?\n")
-            print("2. create a worksheet to save your scores?\n")
-            print("3. return to the main menu?\n")
-            choice = input()
-            if choice == '1':
-                continue
-            elif choice == '2':
-                headings = ["speed in cpm", "speed in wpm", "accuracy"]
-                # print("Enter your username:\n")
-                # username = input().lower()
-                user_scoresheet = SHEET.add_worksheet(title=username, rows=100, cols=20)
-                user_scoresheet.append_row(headings)
-                user_scoresheet.append_row(data)
-                print(f"Scoresheet for '{username}' has been created and updated.\n")
-                return_to_main()
-            elif choice == '3':
-                return_to_main()
+            while True:
+                cprint(f"\nWorksheet for '{username}' not found\n", attrs=["bold", "underline"])
+                cprint("Would you like to:\n", attrs=["bold", "underline"])
+                print("1. input a different username?\n")
+                print("2. create a worksheet to save your scores?\n")
+                print("3. return to the main menu?\n")
+                cprint("Please enter your numeric choice:\n", "green", attrs=["bold"])
+                choice = input()
+                if choice == '1':
+                    continue
+                elif choice == '2':
+                    headings = ["speed in cpm", "speed in wpm", "accuracy"]
+                    user_scoresheet = SHEET.add_worksheet(title=username, rows=100, cols=20)
+                    user_scoresheet.append_row(headings)
+                    user_scoresheet.append_row(data)
+                    cprint(f"\nScoresheet for '{username}' has been created and updated.\n", attrs=["bold", "underline"])
+                    return_to_main()
+                elif choice == '3':
+                    return_to_main()
+                else:
+                    cprint(f"\nInvalid data: {choice}, please try again.\n", "red", attrs=["bold"])
+                    continue
+
 
 
 def main():
@@ -404,34 +435,20 @@ def main():
             clear()
             delete_score_sheet()
         elif choice == '7':
-            print("Exiting the game")
+            cprint("\nExiting the program.\n", "magenta", attrs=["bold"])
+            cprint("Thanks for checking it out!\n", "magenta", attrs=["bold"])
+            cprint("Come back soon!\n", "magenta", attrs=["bold"])
             quit()
         elif choice == '8':
             clear()
             test_scores = run_test_display_results()
+            post_test_choice(test_scores)
         else:
             raise ValueError
     except ValueError:
-        print(f"Invalid data: {choice}, please try again.\n")
+        cprint(f"\nInvalid data: {choice}, please try again.\n", "red", attrs=["bold"])
         return_to_main()
 
-
-    print("\n **** What next? **** \n")
-    print("1. Save results.\n")
-    print("2. Return to main menu.\n")
-    now_what = input()
-    while True:
-        try:
-            if now_what == '1':
-                save_score(test_scores)
-                return_to_main()
-            elif now_what == '2':
-                return_to_main()
-            else:
-                raise ValueError
-        except ValueError:
-            print("Your input was invalid. Please try again.")
-            continue
 
 
 main()
