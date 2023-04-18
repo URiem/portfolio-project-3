@@ -223,8 +223,8 @@ def delete_score_sheet():
             while True:
                 cprint(f"\nA sheet with the name '{username}' exist.\n", attrs=["bold", "underline"])
                 cprint("Are you sure want to delete it?\n", attrs=["bold", "underline"])
-                cprint("Type 'yes' if are ready to delete the sheet,\n", "green")
-                cprint("type 'no' if you do not want to delete it and return to main menu.\n", "green")
+                cprint("Type 'yes' if are ready to delete the sheet,\n", "green", attrs=["bold"])
+                cprint("type 'no' if you do not want to delete it and return to main menu.\n", "green", attrs=["bold"])
                 choice = input()
                 if choice == 'yes':
                     SHEET.del_worksheet(user_scoresheet)
