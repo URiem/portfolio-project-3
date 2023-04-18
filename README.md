@@ -347,6 +347,7 @@ Resources and inspiration came from a few sources:
 
 - The initial idea and parts of the code came from https://towardsdatascience.com/speed-typing-test-project-with-python-da1a56987a5b. It was subsequently heavily developed and the code changed significantly.
 - https://miguendes.me/python-compare-strings
+https://github.com/IvetteMcDermott/PP3-Python
 
 ### Acknowledgements
 
