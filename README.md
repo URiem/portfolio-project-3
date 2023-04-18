@@ -3,7 +3,7 @@
 
 ![Mockup image](docs/iamresponsive.png)
 
-[Live webpage](https://uriem.github.io/geography-game/)
+[Live webpage](https://speed-typing-test.herokuapp.com/)
 
 ## Table of Content
 
@@ -298,12 +298,29 @@ There are currently no outstanding issues that the developer is aware of.
 
 ## Deployment & Development
 
-The website was deployed using GitHub Pages by following these steps:
+The website was deployed on Heroku. The following steps were followed in order for a commplete and functional deployment:
 
-1. In the GitHub respository navigate to the Settings tab.
-2. Select Pages from the menu on the left-hand side of the page.
-3. For the source select Branch: 'main' and then select: 'save'.
-4. After the webpage refreshes automatically a ribbon at the top will displays the following message: "Your site is live at https://uriem.github.io/geography-game/"
+1. The requirements.txt file was populated using the command "pip3 freeze > requirements.txt'
+2. Any text inside the 'input()' function in the run.py file had a 'new line' command (\n) added in order to work properly with the Code Institute template.
+
+3. Once loged into the Heroku dashboard, a new app was created by clicking on the button 'New' and select 'Create New App'.
+5. The app was named 'speed-typing-test' and region 'Europe' selected.
+6. Under 'Setting' in the newly created app, 'Reveal Config Vars' was clicked in order to set environment variables such as sensitive information.
+7. For in the input field labled 'KEY' the word 'CREDS' was entered, all capitals.
+8. The entire contents of the projects creds.json file was pasted into the 'VALUE' field.
+9. A second config var was added with the KEY set to 'PORT' and the VALUE set to '8000'.
+10. Each time 'ADD' was clicked in order to add the config var.
+11. Next, still under the settings tab, Buildpacks were added.
+12. 'Add Buildpack' was clicked and python was selected, then 'Save Changes'.
+13. Next nodejs was added and 'Save Changes' clicked. 
+14. In the list of Buildpacks, python needs to be listed above nodejs, if this is not the case drag the buildpacks into the correct order.
+15. This concluded the 'Settings' of the project.
+16. Next, the 'Deploy' section was accessed by clicking on the 'Deploy' tab.
+17. In the 'Deploy' section GitHub was selected and then the project on GitHub was searched for, it has the name 'portfolio-project-3'. 
+18. The project was then connected to Heroku by clicking 'connect'.
+19. Next, 'Enable Automatic Deploys' was selected so that the app would be updated automatically every time changes are pushed to GitHub.
+20. Then, 'Deploy Branch' was clicked and the app was built.
+21. The link to the deployed page is: https://speed-typing-test.herokuapp.com/
 
 The website repository can be forked by the following steps:
 
