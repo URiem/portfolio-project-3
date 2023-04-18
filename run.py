@@ -260,7 +260,7 @@ def run_test_display_results():
     Run the typing test and display the results
     """
     # cprint("Are you ready to see your paragraph?\n", attrs=["bold", "underline"])
-    ent = input(colored("Hit enter when you are ready to see the paragraph.", "green", attrs=["bold"]))
+    ent = input(colored("Hit enter when you are ready to see the paragraph.\n", "green", attrs=["bold"]))
     if ent == "":
         paragraph = generate_random_paragraph()
         cprint("\n***********************************************\n", attrs=["bold"])
@@ -272,7 +272,7 @@ def run_test_display_results():
         cprint(paragraph, "white", attrs=["bold"])
         cprint("\n***********************************************\n", attrs=["bold"])
 
-    ent = input(colored("Hit enter when you are ready to start typing.", "green", attrs=["bold"]))
+    ent = input(colored("Hit enter when you are ready to start typing.\n", "green", attrs=["bold"]))
     if ent == "":
         print("\n")
         test_results = typed_paragraph()
