@@ -20,7 +20,7 @@
             align-content: center;
             justify-content: center;
             align-items: center;
-            background: url(./sergi-kabrera-unsplash.jpg) no-repeat center center;
+            background-image: url(./sergi-kabrera-unsplash.jpg);
             background-size: cover;
         }
 
@@ -72,7 +72,7 @@
         .xterm .composition-view {
             /* TODO: Composition position got messed up somewhere */
             background: #000;
-            /* color: #FFF; */
+            color: #FFF;
             display: none;
             position: absolute;
             white-space: nowrap;
@@ -105,12 +105,6 @@
             position: absolute;
             left: 0;
             top: 0;
-            /* My changes here */
-            top: -25px;
-            padding-left: 15px;
-            padding-top: 25px;
-            padding-bottom: 25px;
-            padding-right: 15px;
         }
 
         .xterm .xterm-scroll-area {
@@ -172,11 +166,12 @@
         }
 
         button {
-            width: 200px;
-            height: 40px;
+            width: 250px;
+            height: 50px;
             background-color: #10e82d;
-            border: 1px solid grey;
+            border: 3px solid rgba(128, 128, 128, 0);
             color: white;
+            font-weight: 400;
             text-transform: uppercase;
             margin: 10px;
             border-radius: 8px;
