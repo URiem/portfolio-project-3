@@ -279,24 +279,24 @@ def run_test_display_results():
     ent = input(colored("Hit enter when you are ready to see the paragraph.\n", "green", attrs=["bold"]))
     if ent == "":
         paragraph = generate_random_paragraph()
-        cprint("\n***********************************************\n", attrs=["bold"])
+        cprint("***********************************************", attrs=["bold"])
         cprint(paragraph, "white", attrs=["bold"])
-        cprint("\n***********************************************\n", attrs=["bold"])
+        cprint("***********************************************\n", attrs=["bold"])
     else:
         paragraph = generate_random_paragraph()
-        cprint("***********************************************\n", attrs=["bold"])
+        cprint("***********************************************", attrs=["bold"])
         cprint(paragraph, "white", attrs=["bold"])
-        cprint("\n***********************************************\n", attrs=["bold"])
+        cprint("***********************************************\n", attrs=["bold"])
 
     ent = input(colored("Hit enter when you are ready to start typing.\n", "green", attrs=["bold"]))
     if ent == "":
-        print("\n")
+        print("Start typing now.\n")
         test_results = typed_paragraph()
         test_speed_cpm = round(test_results[1])
         test_speed_wpm = round(test_speed_cpm / 5)
         test_para = test_results[0]
     else:
-        print("\n")
+        print("Start typing now.\n")
         test_results = typed_paragraph()
         test_speed_cpm = round(test_results[1])
         test_speed_wpm = round(test_speed_cpm / 5)
@@ -304,7 +304,7 @@ def run_test_display_results():
 
     test_typing_accuracy = determine_accuracy(paragraph, test_para)
 
-    cprint("\n******** YOUR SCORE REPORT ********\n", "yellow")
+    cprint("******** YOUR SCORE REPORT ********\n", "yellow")
     cprint(f"Typing accuracy is {test_typing_accuracy} % of characters in the paragraph.\n", attrs=["bold"])
     cprint(f"Speed is {test_speed_cpm} characters/minute\n", attrs=["bold"])
     cprint(f"that is approx. {test_speed_wpm} words/minute\n", attrs=["bold"])
