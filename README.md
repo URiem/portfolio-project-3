@@ -1,4 +1,4 @@
-# Geography Quiz
+# Speed Typing Test
 (Developer: Ulrike Riemenschneider)
 
 ![Mockup image](docs/iamresponsive.png)
@@ -50,9 +50,11 @@ The Speed and Accuracy Typing tests is designed to give users a chance to test t
 
 ### User Goals
 - The site's user wants to test their typing skills in terms of speed and accuracy.
+- The user can save results and track their progress.
 
 ### Site Owner Goals
 - The site owner's goal is to provided an intuitive and easy to use application that allows a user to test their typing skills.
+- The owner's goal is to encourage the user to return to the test in the future to retest their skill and review previous results.
 
 ## User Experience
 
@@ -95,12 +97,11 @@ As the site owner, I want to ...
 
 #### Intial Stage
 
-At the initial stage the application will include a introductary section where the user can choose from a few option for further information, such as instructions, information on average typing speeds, informationn on how to improve their typing skills. Then the user will be able to run the test and see immediate feedback in the form of a typing speed in characters/mintues and words/minute as well as a percentage accuracy. The user can then choose to return to the beginning and run the test again.
+At the initial stage the application will include a main menu where the user can choose from a few option for further information, such as instructions, information on average typing speeds, informationn on how to improve their typing skills. The user can also opt to create a username and score sheet to record results, they can review old results and delete a previously created and populated score sheet. Then the user will be able to run the test and see immediate feedback in the form of a typing speed in characters/mintues and words/minute as well as a percentage accuracy. 
 
 #### Future Additions
 
-In a future edition of the application the user will be able to save their scores in a google spread sheet and monitor progress. 
- 
+In a future edition of the application the user will be able to access ChatGPT to create custom text to type.
 
 ### Structure
 
@@ -117,14 +118,14 @@ In a future edition of the application the user will be able to save their score
 
 ### Features
 
-#### Welcome Section
+#### Main Menu
 
 <details>
-<summary>Welcome Screen</summary>
+<summary>Main Menu</summary>
 <img src="docs/welcomescrn.png" width="700">
 </details>
 
-- A welcome message is displayed and the user can choose from several options to read instruction, optain further information or start the test.
+- A welcome message is displayed and the user can choose from a menu of 8 option how to proceed.
 
 #### Information Sections
 
