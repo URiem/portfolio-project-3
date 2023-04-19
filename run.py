@@ -195,26 +195,31 @@ def create_user_score_sheet():
     headings = ["speed in cpm", "speed in wpm", "accuracy"]
     cprint("Enter your username for a new score sheet:\n", "green", attrs=["bold"])
     username = input().lower()
-    try:
-        user_scoresheet = SHEET.worksheet(username)
-        cprint(f"\nA sheet with the name {username} already exist.\n", attrs=["bold", "underline"])
-        cprint("Do you you want to:\n", attrs=["bold", "underline"])
-        print("1. Choose a differnt username?\n")
-        print("2. Return to main menu and record data to existing sheet?\n")
-        cprint("Enter your numeric choice:\n", "green", attrs=["bold"])
-        choice = input()
-        if choice == '1':
-            clear()
-            create_user_score_sheet()
-        elif choice == '2':
-            clear()
-            main()
-    except gspread.exceptions.WorksheetNotFound:
-        user_scoresheet = SHEET.add_worksheet(title=username, rows=100, cols=20)
-        user_scoresheet.append_row(headings)
-        cprint(f"\nScoresheet for '{username}' has been created.\n", attrs=["bold", "underline"])
-        print("It can now be used to save scores of the test.\n")
-        return_to_main()
+    while True:
+        try:
+            user_scoresheet = SHEET.worksheet(username)
+            cprint(f"\nA sheet with the name {username} already exist.\n", attrs=["bold", "underline"])
+            cprint("Do you you want to:\n", attrs=["bold", "underline"])
+            print("1. Choose a differnt username?\n")
+            print("2. Return to main menu and record data to existing sheet?\n")
+            cprint("Enter your numeric choice:\n", "green", attrs=["bold"])
+            choice = input()
+            if choice == '1':
+                clear()
+                create_user_score_sheet()
+            elif choice == '2':
+                clear()
+                main()
+            else:
+                clear()
+                cprint("Your input was invalid. Please try again", "red", attrs=["bold"])
+                continue
+        except gspread.exceptions.WorksheetNotFound:
+            user_scoresheet = SHEET.add_worksheet(title=username, rows=100, cols=20)
+            user_scoresheet.append_row(headings)
+            cprint(f"\nScoresheet for '{username}' has been created.\n", attrs=["bold", "underline"])
+            print("It can now be used to save scores of the test.\n")
+            return_to_main()
 
 
 def delete_score_sheet():
