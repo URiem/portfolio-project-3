@@ -304,7 +304,7 @@ def run_test_display_results():
 
     test_typing_accuracy = determine_accuracy(paragraph, test_para)
 
-    cprint("******** YOUR SCORE REPORT ********\n", "yellow")
+    cprint("\n******** YOUR SCORE REPORT ********\n", "yellow", attrs=["bold"])
     cprint(f"Typing accuracy is {test_typing_accuracy} % of characters in the paragraph.\n", attrs=["bold"])
     cprint(f"Speed is {test_speed_cpm} characters/minute\n", attrs=["bold"])
     cprint(f"that is approx. {test_speed_wpm} words/minute\n", attrs=["bold"])
