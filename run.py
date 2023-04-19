@@ -65,12 +65,12 @@ def main_menu():
     print("4. See your old scores and statistics.\n")
     print("5. Create a username to save results.\n")
     print("6. Delete a username and scoresheet.\n")
-    print("7. Exit the program.\n")
-    print("8. Start the test.\n")
+    print("7. Start the test.\n")
+    print("8. Exit the program.\n")
 
     cprint("Enter the number of your choice here:\n", "green", attrs=["bold"])
     choice = input()
-    
+
     return choice
 
 
@@ -96,16 +96,16 @@ def print_more_information():
     other useful or interesting information
     """
     cprint("\nDid you know?\n", attrs=["underline", "bold"])
-    print("The QWERTY keyboard layout is standard on nearly every keyboard\n")
-    print("and phone in the English-speaking world. Currently, the average typing\n")
-    print("speed on a QWERTY layout for an adult who uses typing for their job\n")
-    print("is around 40 WPM. Touch typists using the home-row method are typically\n")
-    print("faster typists because they don’t look down at the keyboard and\n")
-    print("type from muscle memory. Hunt and peck typists typically use two-fingers\n")
-    print("and look at the keys as they type, so it takes them longer to find the letters.\n")  
-    print("\nOfficially, the fastest typist in the world is Barbara Blackburn,\n")
-    print("who has reached top speeds of 212 wpm on a Dvorak keyboard. She was able\n")
-    print("to maintain a speed of 150 wpm for 50 minutes. Barbara has held this\n")
+    print("The QWERTY keyboard layout is standard on nearly every keyboard")
+    print("and phone in the English-speaking world. Currently, the average typing")
+    print("speed on a QWERTY layout for an adult who uses typing for their job")
+    print("is around 40 WPM. Touch typists using the home-row method are typically")
+    print("faster typists because they don’t look down at the keyboard and")
+    print("type from muscle memory. Hunt and peck typists typically use two-fingers")
+    print("and look at the keys as they type, so it takes them longer to find the letters.\n")
+    print("\nOfficially, the fastest typist in the world is Barbara Blackburn,")
+    print("who has reached top speeds of 212 wpm on a Dvorak keyboard. She was able")
+    print("to maintain a speed of 150 wpm for 50 minutes. Barbara has held this")
     print("record since 2005.\n")
 
     return_to_main()
@@ -148,33 +148,42 @@ def see_old_scores_and_statistics():
                     clear()
                     see_old_scores_and_statistics()
                 elif choice == '2':
-                    return_to_main()
+                    clear()
+                    main()
                 else:
-                    cprint("\nYour input is invalid. Please try again.\n", "red", attrs=["bold"])
+                    cprint("Your input is invalid. Please try again.\n", "red", attrs=["bold"])
                     continue
-
-
 
     cprint(f"\nThe collective test results for '{username}' are:\n", attrs=["bold", "underline"])
     dataframe = pd.DataFrame(user_scoresheet.get_all_records())
     print(dataframe)
+    if dataframe.empty:
+        print('\nThere are not data in the worksheet yet.')
+        print('\nRun at least one test and save the score.')
+        return_to_main()
 
-    user_speed_cpm_values = user_scoresheet.col_values(1)
-    user_speed_wpm_values = user_scoresheet.col_values(2)
-    user_accuracy_values = user_scoresheet.col_values(3)
+    try:
+        user_speed_cpm_values = user_scoresheet.col_values(1)
+        user_speed_wpm_values = user_scoresheet.col_values(2)
+        user_accuracy_values = user_scoresheet.col_values(3)
 
-    int_speed_cpm = [eval(i) for i in user_speed_cpm_values[1:]]
-    int_speed_wpm = [eval(i) for i in user_speed_wpm_values[1:]]
-    int_accuracy = [eval(i) for i in user_accuracy_values[1:]]
+        int_speed_cpm = [eval(i) for i in user_speed_cpm_values[1:]]
+        int_speed_wpm = [eval(i) for i in user_speed_wpm_values[1:]]
+        int_accuracy = [eval(i) for i in user_accuracy_values[1:]]
 
-    avg_speed_cpm = round(mean(int_speed_cpm))
-    avg_speed_wpm = round(mean(int_speed_wpm))
-    avg_accuracy = round(mean(int_accuracy), 1)
+        avg_speed_cpm = round(mean(int_speed_cpm))
+        avg_speed_wpm = round(mean(int_speed_wpm))
+        avg_accuracy = round(mean(int_accuracy), 1)
 
-    cprint(f"\nStatistics for '{username}'\n", attrs=["bold", "underline"])
-    print(f"Your average speed is {avg_speed_cpm} characters per minute\n")
-    print(f"That is approx. {avg_speed_wpm} words per minute\n")
-    print(f"Your average accuracy is {avg_accuracy}%\n")
+        cprint(f"\nStatistics for '{username}'\n", attrs=["bold", "underline"])
+        print(f"Your average speed is {avg_speed_cpm} characters per minute\n")
+        print(f"That is approx. {avg_speed_wpm} words per minute\n")
+        print(f"Your average accuracy is {avg_accuracy}%\n")
+    except SyntaxError:
+        print('\n')
+        cprint("A Syntax Error has occured and statistics can not be computed.\n", "red", attrs=["bold"])
+        cprint("The data file may be corrupted.\n", "red", attrs=["bold"])
+        cprint("From the main menu you can delete the file and create a new one.", "red", attrs=["bold"])
 
     return_to_main()
 
@@ -231,24 +240,26 @@ def delete_score_sheet():
                     cprint(f"\nThe sheet '{username}' has been deleted", attrs=["bold", "underline"])
                     return_to_main()
                 elif choice == 'no':
-                    return_to_main()
+                    clear()
+                    main()
                 else:
                     clear()
                     cprint("Your input was invalid. Please try again", "red", attrs=["bold"])
                     continue
         except gspread.exceptions.WorksheetNotFound:
             while True:
-                print(f"A score sheet with the name '{username}' does not exist.\n")
+                cprint(f"A score sheet with the name '{username}' does not exist.\n", attrs=["bold", "underline"])
                 print("Do you want to:\n")
                 print("1. Enter another username?\n")
                 print("2. Return to the main menu?\n")
-                print("Enter the number of your choice:\n")
+                cprint("Enter the number of your choice:\n", "green", attrs=["bold"])
                 choice = input()
                 if choice == '1':
                     clear()
                     delete_score_sheet()
                 elif choice == '2':
-                    return_to_main()
+                    clear()
+                    main()
                 else:
                     clear()
                     cprint("Your input was invalid. Please try again", "red", attrs=["bold"])
@@ -294,7 +305,6 @@ def run_test_display_results():
     cprint(f"that is approx. {test_speed_wpm} words/minute\n", attrs=["bold"])
 
     results = [test_speed_cpm, test_speed_wpm, test_typing_accuracy]
-
 
     return results
 
@@ -343,6 +353,7 @@ def determine_accuracy(sent_para, typed_para):
 
     return result
 
+
 def post_test_choice(data):
     """
     User gets a choice to save the data or return to the main menu
@@ -358,13 +369,13 @@ def post_test_choice(data):
                 save_score(data)
                 return_to_main()
             elif now_what == '2':
-                return_to_main()
+                clear()
+                main()
             else:
                 raise ValueError
         except ValueError:
             cprint("\nYour input was invalid. Please try again.\n", "red", attrs=["bold"])
             post_test_choice(data)
-
 
 
 def save_score(data):
@@ -400,11 +411,11 @@ def save_score(data):
                     cprint(f"\nScoresheet for '{username}' has been created and updated.\n", attrs=["bold", "underline"])
                     return_to_main()
                 elif choice == '3':
-                    return_to_main()
+                    clear()
+                    main()
                 else:
                     cprint(f"\nInvalid data: {choice}, please try again.\n", "red", attrs=["bold"])
                     continue
-
 
 
 def main():
@@ -435,20 +446,19 @@ def main():
             clear()
             delete_score_sheet()
         elif choice == '7':
+            clear()
+            test_scores = run_test_display_results()
+            post_test_choice(test_scores)
+        elif choice == '8':
             cprint("\nExiting the program.\n", "magenta", attrs=["bold"])
             cprint("Thanks for checking it out!\n", "magenta", attrs=["bold"])
             cprint("Come back soon!\n", "magenta", attrs=["bold"])
             quit()
-        elif choice == '8':
-            clear()
-            test_scores = run_test_display_results()
-            post_test_choice(test_scores)
         else:
             raise ValueError
     except ValueError:
         cprint(f"\nInvalid data: {choice}, please try again.\n", "red", attrs=["bold"])
         return_to_main()
-
 
 
 main()
