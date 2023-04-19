@@ -36,7 +36,7 @@ def clear():
     else:
         _ = system('clear')
 
-    cprint("*** Welcome to the Speed Typing Test! ***\n", "light_yellow")
+    cprint("*** Welcome to the Speed Typing Test! ***\n", "light_yellow", attrs=["bold"])
 
 
 def return_to_main():
