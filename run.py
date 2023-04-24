@@ -1,16 +1,13 @@
-# https://towardsdatascience.com/speed-typing-test-project-with-python-da1a56987a5b
-# to test code use: pycodestyle run.py
+import time
+from os import system, name
+from difflib import SequenceMatcher
+from statistics import mean
+
 import gspread
 from google.oauth2.service_account import Credentials
 
 from wonderwords import RandomSentence
-import random
-import time
-import os
-from os import system, name
-from difflib import SequenceMatcher
 from termcolor import colored, cprint
-from statistics import mean
 import pandas as pd
 
 SCOPE = [
@@ -159,6 +156,7 @@ def see_old_scores_and_statistics():
     in the terminal window
     """
     while True:
+        usrnm = None
         try:
             cprint(
                 "Enter your username to see your scores and statistics:\n",
@@ -245,6 +243,7 @@ def create_user_score_sheet():
     )
     usrnm = input().lower()
     while True:
+        usrnm = None
         try:
             user_scsht = SH.worksheet(usrnm)
             cprint(
@@ -287,6 +286,7 @@ def delete_score_sheet():
     Delete a user score sheet
     """
     while True:
+        usrnm = None
         try:
             cprint(
                 "Enter username for the scoresheet you want to delete:\n",
@@ -494,6 +494,7 @@ def save_score(data):
     Save score to worksheet that matches the username
     """
     while True:
+        usrnm = None
         try:
             cprint(
                 "\nEnter your username to save the score:\n",
