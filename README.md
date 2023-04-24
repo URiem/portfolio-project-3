@@ -217,9 +217,9 @@ Several sites came in handy while developing the code to help with problem solvi
 
 ## Testing and Validation
 
-### CI Python Linter
+### PEP8 CI Python Linter
 
-- No errors found when testing the python code from run.py in the CI Python Linter.
+- No errors found when testing the python code from run.py in the PEP8 CI Python Linter.
 
 ![Python Testing](docs/cipythonlinter.png)
 
