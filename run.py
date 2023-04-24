@@ -1,4 +1,5 @@
 """This program runs a speed and accuracy typing test."""
+
 import time
 from os import system, name
 from difflib import SequenceMatcher

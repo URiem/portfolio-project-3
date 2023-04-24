@@ -34,9 +34,12 @@
     2. [Frameworks & Tools](#frameworks--tools)
     3. [Helpful Sites](#helpful-sites)
 5. [Testing and Validation](#testing-and-validation)
-    1. [PEP8](#pep8-online-testing)
-    2. [Testing User Stories](#testing-user-stories)
-    3. [Outstanding Issues](#outstanding-issues)
+    1. [Python Linter](#ci-python-linter)
+    2. [HTML Validation](#html)
+    3. [CSS Validation](#css)
+    4. [Lighthouse Testing](#lighthouse)
+    5. [User Stories](#user-stories)
+    6. [Manual Testing](#manual-testing)
 6. [Bugs & Fixes](#bugs--fixes)
 7. [Deployment & Development](#deployment--development)
 8. [Credits](#credits)
@@ -44,7 +47,7 @@
 
 ## Introduction
 
-The Speed and Accuracy Typing tests is designed to give users a chance to test their abilities in terms of typing speed and accuracy. It also gives users the opportunity to access information on what constitues a good average score and how to improve. The program is designed in Python and is run through a terminal window.
+The Speed and Accuracy Typing tests is designed to give users a chance to test their abilities in terms of typing speed and accuracy. It also gives users the opportunity to access information on what constitues a good average score and how to improve. Users can create a score sheet to save their results, they can access past data and calculate averages. The can also delete their score sheet. The program is designed in Python and is run through a terminal window.
 
 ## Project Goals
 
@@ -120,76 +123,78 @@ In a future edition of the application the user will be able to access ChatGPT t
 
 #### Main Menu
 
-<details>
-<summary>Main Menu</summary>
-<img src="docs/welcomescrn.png" width="700">
-</details>
+- A welcome message is displayed and the user can choose from a main menu of 8 option how to proceed.
 
-- A welcome message is displayed and the user can choose from a menu of 8 option how to proceed.
+![Main Menu](docs/mainmenu.png)
 
 #### Information Sections
 
-<details>
-<summary>Instructions</summary>
-<img src="docs/chooselevelscrn.png" width="700">
-</details>
+- Instructions: Here the user can read the instructions for the test.
 
-- Here the user can read the instructions for the test.
+![Instruction](docs/instructions.png)
 
-<details>
-<summary>Information on average typing speeds</summary>
-<img src="docs/chooselevelscrn.png" width="700">
-</details>
+- General Information: Here the user can optain information on typical typing speeds and the world record in speed typing.
 
-- Here the user can optain information on typical typing speeds and some world records in speed typing.
+![General Information](docs/generalinformation.png)
 
-<details>
-<summary>Tips on how to improve</summary>
-<img src="docs/chooselevelscrn.png" width="700">
-</details>
+- How to improve: Here the user can get a few pointers on how to improve accuracy and speed of typing.
 
-- Here the user can get a few tips on how to improve their typing speed and accuracy.
+![How To Improve](docs/howtoimprove.png)
 
-#### Test Section 
+#### Score Sheet Sections
 
-<details>
-<summary>Test Section</summary>
-<img src="docs/quizsectionscrn.png" width="700">
-</details>
+- Access past scores: Here the user can access a previously saved scoresheet and see individual results and averages. 
 
-- This section walks the user through the test.
-- When the user indicates they are ready, the random paragraph will be displayed.
-- When the user indicates they are ready, they are required to copy the text into the terminal window.
-- To complete the test they need to hit 'Enter'.
+![Access Scoresheet](docs/accessscoresheettop.png)
 
-#### Results Section
+- Create a scoresheet: Here the user can enter a username and create a scoresheet.
 
-<details>
-<summary>Results Section</summary>
-<img src="docs/endofgamepage.png" width="700">
-</details>
+![Create A Scoresheet](docs/createscoresheet.png)
 
-- Features the test results.
-- Accuracy is displayed as a percentage.
-- Speed is displayed in characters per minute and words per minute.
+- Delete a scoresheet: Here the user can enter a username and delete a scoresheet with that name if it exists.
+
+![Delete A Scoresheet](docs/deletescoresheet.png)
+
+#### Testing Section
+
+- Here the test is run. The user will be prompted to hit enter while moving through several steps until he/she is prompted to start typing and hit enter to complete the test.
+
+- The score is then displayed. Accuracy is given as a percentage. Speed is displayed in characters per minute and words per minute.
+
 - The user can then choose to exit the test, save the scores or test again.
+
+![Test Section](docs/testandresults.png)
+
+![Post Test Options](docs/endoftestoptions.png)
+
+#### Exit Test
+
+- The final choice in the main  menu is for the user to exit the program.
+
+![Exit Program](docs/exitprogram.png)
 
 
 #### Future Additions
 
-If time allows the user will be able to store results and access them later to compare scores upon returning and running the test again. If time does not allow, this will be a feature to be added in the future.
+At this time the paragraph of random sentences created using 'wonderwords' is fairly nonsensical. In the future the developer would like to implement a simply routine that allows the user to request a short paragraph of text using ChatGPT on a topic of their choice. 
+
+Because the only purpose of the paragraph is to test speed and accuracy of typing, the developer does not feel that it detracts from the purpose of the test to have meaningless text as the current test material. 
 
 ## Technologies Used
 
 ### Languages
 - Python
 
-#### Python Packages
+#### Python Libraries
+- Time
+- OS
+- Difflib
+- Statistics
+- Ast
 - Gspread
 - Wonderwords
-- Time
-- Random
-- Difflib
+- Termcolor
+- Pandas
 
 ### Frameworks & Tools
 - Git
@@ -198,25 +203,43 @@ If time allows the user will be able to store results and access them later to c
 - Heroku
 - Google Spreadsheets
 - Lucidchart
-- PEP8
+- CI Python Linter
+- W3C HTML and CSS Validation Service
 
 ### Helpful sites
 
 Several sites came in handy while developing the code to help with problem solving:
 
-- <a href="https://www.w3schools.com/">W3 Schools</a>
-- <a href="https://stackoverflow.com">Stack Overflow</a>
-- <a href="https://developer.mozilla.org/">mdn web docs</a>
-https://geekflare.com/python-remove-last-character/
+- [W3 Schools](https://www.w3schools.com/)
+- [Stack Overflow](https://stackoverflow.com)
+- [mdn web docs](https://developer.mozilla.org/)
+- [Geekflare](https://geekflare.com/python-remove-last-character/)
 
 ## Testing and Validation
 
-### PEP8 Online Testing
+### CI Python Linter
 
-<details>
-<summary>PEP8 Testing</summary>
-<img src="docs/404htmlvalidation.png" width="700">
-</details>
+- No errors found when testing the python code from run.py in the CI Python Linter.
+
+![Python Testing](docs/cipythonlinter.png)
+
+### HTML
+
+- No errors or warnings found during HTML validation using W3C Markup Validation Service.
+
+![HTML Validation](docs/htmltesting.png)
+
+### CSS
+
+- No errors found when validating the CSS using the W3C CSS Validation Service.
+
+![CSS Validation](docs/csstesting.png)
+
+### Lighthouse
+
+- Excellent scores for Performance, Accessiblity and Best Practises in Lighthouse.
+
+![Lighthouse Testing](docs/lighthousetesting.png)
 
 ### Testing User Stories
 
@@ -285,6 +308,10 @@ As the site owner, I want to ...
 |-------------|------------|---------------------|-------------------|
 
 
+### Manual Testing
+
+The flow of the program was tested extensively using valid and invalid input data at every stage. All errors that did occur during this testing phase were fixed. No more errors should occur. 
+
 
 ### Outstanding Issues
 
@@ -295,6 +322,9 @@ There are currently no outstanding issues that the developer is aware of.
 
 | **Bug** | **Fix** |
 | ----------- | ----------- |
+| It was seemingly impossible to get a 100% score on the test. This was due to a whitespace at the end of the random string created. | Stripping the whitespace from the end of the string fixed the problem.|
+| By chance a 'corrupted' worksheet was being read, which created an error. | Data validation was added to prevent an error in reading the data off the spreadsheet. |
+
 
 
 ## Deployment & Development
@@ -342,13 +372,15 @@ The repository can be cloned by the following steps:
 
 ### Media
 
+- The background image is by [Sergi Kabrera](https://unsplash.com/photos/2xU7rYxsTiM).
+
 ### Code
 
 Resources and inspiration came from a few sources:
 
-- The initial idea and parts of the code came from https://towardsdatascience.com/speed-typing-test-project-with-python-da1a56987a5b. It was subsequently heavily developed and the code changed significantly.
-- https://miguendes.me/python-compare-strings
-https://github.com/IvetteMcDermott/PP3-Python
+- The initial idea and parts of the code came from [Bharath K](https://towardsdatascience.com/speed-typing-test-project-with-python-da1a56987a5b). It was subsequently heavily developed and much of the code changed significantly.
+- Research on ideas how to compare two string lead the developer to the following page of ideas: [How to Compare Two Strings in Python](https://miguendes.me/python-compare-strings)
+- Ideas for how to adjust the styling of the CI template came from [Ivette McDermot](https://github.com/IvetteMcDermott/PP3-Python) and [Iasmina Pal](https://github.com/useriasminna/american_pizza_order_system).
 
 ### Acknowledgements
 
@@ -356,4 +388,3 @@ I would like to thank:
 - My mentor Brian O'Hare for his feedback, advice, guidance and support.
 - Cohort fascilitator Paul Thomas O'Rirodan, for his general advice on the management of the course and pointing us to a plethora of resources to help with the projects.
 - My husband, Matt, for his encouragement and support along the way.
-- A test, a test, a test
