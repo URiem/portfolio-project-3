@@ -1,7 +1,9 @@
+"""This program runs a speed and accuracy typing test."""
 import time
 from os import system, name
 from difflib import SequenceMatcher
 from statistics import mean
+from ast import literal_eval
 
 import gspread
 from google.oauth2.service_account import Credentials
@@ -205,9 +207,9 @@ def see_old_scores_and_statistics():
         user_speed_wpm_values = user_scsht.col_values(2)
         user_accuracy_values = user_scsht.col_values(3)
 
-        int_speed_cpm = [eval(i) for i in user_speed_cpm_values[1:]]
-        int_speed_wpm = [eval(i) for i in user_speed_wpm_values[1:]]
-        int_accuracy = [eval(i) for i in user_accuracy_values[1:]]
+        int_speed_cpm = [literal_eval(i) for i in user_speed_cpm_values[1:]]
+        int_speed_wpm = [literal_eval(i) for i in user_speed_wpm_values[1:]]
+        int_accuracy = [literal_eval(i) for i in user_accuracy_values[1:]]
 
         avg_speed_cpm = round(mean(int_speed_cpm))
         avg_speed_wpm = round(mean(int_speed_wpm))
