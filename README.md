@@ -53,7 +53,7 @@ The Speed and Accuracy Typing tests is designed to give users a chance to test t
 
 ### User Goals
 - The site's user wants to test their typing skills in terms of speed and accuracy.
-- The user can save results and track their progress.
+- The user wants to save results and track their progress.
 
 ### Site Owner Goals
 - The site owner's goal is to provided an intuitive and easy to use application that allows a user to test their typing skills.
@@ -108,16 +108,30 @@ In a future edition of the application the user will be able to access ChatGPT t
 
 ### Structure
 
-#### Flowchart
+The structure of the site itself consists of a one page website display that contains a terminal window. The Speed Typing Test is run in the terminal window. Above the terminal window a heading 'Speed Typing Test' is displayed, as well as a button that allows the user to start and repeatedly restart the program as many times as desired.
+
+### Flowchart/Skeleton
+
+The following flow chart illustrates the approximate flow of the program and choices the user can make.
 
 ![Flowchart](docs/flowchart.png)
 
 
 ### Surface
 
+To add a little bit of appeal to the site, the surface has been modified slightly from the provided CI template. The terminal window is centered in the browser and a background picture featuring an image of a keyboard adds visual appeal fitting the theme of the application. 
 
 #### Color Scheme
 
+The background picture has light grey shades to maintain contrast between the background and the terminal window.
+
+The button above the terminal window is a bright green color so that it lifts out from the page and calls for action. 
+
+The text in the terminal window is colored depending on the type of information displayed or action called for. Menu options are generally displayed in plain white text. User input is requested in green text. Errors are displayed in red. The welcome heading and score headings are yellow. Important information and subheadings are bold and underlined. 
+
+#### Font
+
+The font of the heading is Special Elite, which emulates the look of the look of a classic type writer font.
 
 ### Features
 
