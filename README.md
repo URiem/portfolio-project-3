@@ -417,6 +417,14 @@ The repository can be cloned by the following steps:
 6. Type git clone and paste the URL from the clipboard ($ git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY)
 7. Press Enter to create your local clone.
 
+## Google Sheet Access 
+
+Information for the assessors: 
+
+Here is a link to the Googlesheet that is used to store, retrieve and delete data as part of the Speed Typing Test: [Google Sheet](https://docs.google.com/spreadsheets/d/1v-5AT1lGhn5DdTJ2SSQxviafFVwBQmiwdsMQ1t6k-LA/edit?usp=sharing).
+
+Please note that there is a prepopulated worksheet names 'test' which the assessors can use to test the functionality of the program. Additional results can be written to this worksheet, but it cannot be deleted. 
+
 ## Credits
 
 ### Media
