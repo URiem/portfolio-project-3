@@ -376,7 +376,6 @@ There are currently no outstanding issues that the developer is aware of.
 | By chance a 'corrupted' worksheet was being read, which created an error. | Data validation was added to prevent an error in reading the data off the spreadsheet. |
 
 
-
 ## Deployment & Development
 
 The website was deployed on Heroku. The following steps were followed in order for a commplete and functional deployment:
@@ -431,6 +430,21 @@ Resources and inspiration came from a few sources:
 - The initial idea to develop a speed typing test and parts of the code came from [Bharath K](https://towardsdatascience.com/speed-typing-test-project-with-python-da1a56987a5b). It was subsequently heavily developed and extended. Much of the code changed significantly.
 - Research on ideas how to compare two string lead the developer to the following page of ideas: [How to Compare Two Strings in Python](https://miguendes.me/python-compare-strings)
 - Ideas for how to adjust the styling of the CI template came from [Ivette McDermot](https://github.com/IvetteMcDermott/PP3-Python) and [Iasmina Pal](https://github.com/useriasminna/american_pizza_order_system).
+
+### Typing resources
+
+General information on speed typing and how to improve were found on the following websites:
+
+- [Ratatype](https://www.ratatype.com/learn/average-typing-speed/)
+- [Das Keyboard Blog](https://www.daskeyboard.com/blog/average-typing-speed-and-words-per-minute-explained/)
+- [Typing Pal](https://www.typingpal.com/en/blog/which-unit-of-speed-to-choose)
+- [Pitman Training](https://www.pitman-training.ie/advice-hub/pitman-blog/fun-typing-facts-qwerty-keyboard-history-typing-speed/)
+- [Indeed](https://www.indeed.com/career-advice/career-development/improve-typing-skills)
+
+### ChatGPT Resources
+
+- [Geeks for Geeks](https://www.geeksforgeeks.org/how-to-use-chatgpt-api-in-python/)
+- [Rollbar](https://rollbar.com/blog/how-to-integrate-chatgpt-into-your-python-script/)
 
 ### Acknowledgements
 
