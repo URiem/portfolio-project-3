@@ -169,7 +169,10 @@ def see_old_scores_and_statistics():
             break
         except gspread.exceptions.WorksheetNotFound:
             while True:
-                print(f"\nWorksheet for '{usrnm}' not found\n")
+                cprint(
+                    f"\nWorksheet for '{usrnm}' not found\n",
+                    "red", attrs=["bold"]
+                )
                 cprint("Would you like to:\n", attrs=["bold", "underline"])
                 print("1. enter a different username or\n")
                 print("2. return to the main menu?\n")
@@ -186,7 +189,7 @@ def see_old_scores_and_statistics():
                     main()
                 else:
                     cprint(
-                        "Your input is invalid. Please try again.\n",
+                        f"\nInvalid input: {choice}. Please enter 1 or 2.",
                         "red", attrs=["bold"]
                     )
                     continue
@@ -198,8 +201,14 @@ def see_old_scores_and_statistics():
     dataframe = pd.DataFrame(user_scsht.get_all_records())
     print(dataframe)
     if dataframe.empty:
-        cprint('\nThere are no data in the scoresheet yet.', attrs=["bold"])
-        cprint('\nTake at least one test and save the score.', attrs=["bold"])
+        cprint(
+            '\nThere are no data in the scoresheet yet.',
+            "red", attrs=["bold"]
+        )
+        cprint(
+            '\nTake at least one test and save the score.',
+            "red", attrs=["bold"]
+        )
         return_to_main()
 
     try:
@@ -267,7 +276,7 @@ def create_user_score_sheet():
             else:
                 clear()
                 cprint(
-                    "Your input was invalid. Please try again",
+                    f"Invalid input: {choice}. Please enter 1 or 2",
                     "red", attrs=["bold"]
                 )
                 continue
@@ -329,7 +338,7 @@ def delete_score_sheet():
                 else:
                     clear()
                     cprint(
-                        "Your input was invalid. Please try again",
+                        f"Invalid input: {choice}. Enter 'yes' or 'no'.",
                         "red", attrs=["bold"]
                     )
                     continue
@@ -356,7 +365,7 @@ def delete_score_sheet():
                 else:
                     clear()
                     cprint(
-                        "Your input was invalid. Please try again",
+                        f"Invalid input: {choice}. Please enter 1 or 2.",
                         "red", attrs=["bold"]
                     )
                     continue
@@ -411,6 +420,14 @@ def run_test_display_results():
     )
     cprint(f"Speed is {test_speed_cpm} characters/minute\n", attrs=["bold"])
     cprint(f"that is approx. {test_speed_wpm} words/minute\n", attrs=["bold"])
+
+    if test_speed_cpm == 0:
+        cprint("Your test scores are 0.", "red", attrs=["bold"])
+        cprint(
+            "You did not complete the test as designed",
+            "red", attrs=["bold"]
+        )
+        return_to_main()
 
     results = [test_speed_cpm, test_speed_wpm, test_typing_accuracy]
 
@@ -483,7 +500,7 @@ def post_test_choice(data):
                 raise ValueError
         except ValueError:
             cprint(
-                "\nYour input was invalid. Please try again.\n",
+                f"\nInvalid input {now_what}. Please enter 1 or 2.\n",
                 "red", attrs=["bold"]
             )
             post_test_choice(data)
@@ -541,7 +558,7 @@ def save_score(data):
                     main()
                 else:
                     cprint(
-                        f"\nInvalid data: {choice}, please try again.\n",
+                        f"\nInvalid input: {choice}. Enter 1, 2, or 3.\n",
                         "red", attrs=["bold"]
                     )
                     continue
@@ -587,7 +604,7 @@ def main():
             raise ValueError
     except ValueError:
         cprint(
-            f"\nInvalid data: {choice}, please try again.\n",
+            f"\nInvalid input: {choice}. Please a number from 1 to 8.\n",
             "red", attrs=["bold"]
         )
         return_to_main()
