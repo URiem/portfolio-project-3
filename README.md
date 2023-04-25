@@ -20,21 +20,23 @@
         * [Initial Stage](#intial-stage)
         * [Future Additions](#future-additions)
     3. [Structure](#structure)
-        * [Flowchart](#flowchart)
-    4. [Surface](#surface)
+    4. [Flowchart](#flowchart)
+    5. [Surface](#surface)
         * [Color Scheme](#color-scheme)
+        * [Font](#font)
     5. [Features](#features)
-        * [Welcome Section](#welcome-section)
-        * [Information Section](#information-sections)
-        * [Test Section](#test-section)
-        * [Results Section](#results-section)
+        * [Main Menu](#main-menu)
+        * [Information Sections](#information-sections)
+        * [Scoresheet Sections](#score-sheet-sections)
+        * [Testing Section](#testing-section)
+        * [Exit Test](#exit-test)
         * [Future Additions](#future-additions)
 4. [Technologies Used](#technologies-used)
     1. [Language](#languages)
     2. [Frameworks & Tools](#frameworks--tools)
     3. [Helpful Sites](#helpful-sites)
 5. [Testing and Validation](#testing-and-validation)
-    1. [Python Linter](#ci-python-linter)
+    1. [PEP8 Python Linter](#pep8-ci-python-linter)
     2. [HTML Validation](#html)
     3. [CSS Validation](#css)
     4. [Lighthouse Testing](#lighthouse)
@@ -80,20 +82,21 @@ As a first time user, I want to ...
 2. ... easily and intuitively move through the test.
 3. ... get easily understandable results.
 4. ... understand how my score fits in with standard averages.
-3. ... learn how I can improve my score.
-
+5. ... learn how I can improve my score.
+6. ... save my results.
 
 ##### Returning Users
 As a returning user, I want to ...
 1. ... retake the test to see if my score has improved.
 2. ... access previous results.
+3. ... delete a scoresheet.
 
 ##### Site owner
 As the site owner, I want to ...
 1. ... develop an application that is easy to use.
 2. ... provide clear instructions of the application.
 3. ... provide the user with additional information on how to improve.
-4. ... provide the user with background information.
+4. ... provide the user with background information on speed typing.
 5. ... allow the user to save their scores and return to retest and improve their scores.
 
 ### Scope
@@ -257,7 +260,7 @@ Several sites came in handy while developing the code to help with problem solvi
 
 ### Testing User Stories
 
-As a first time user, I want to ...
+**As a first time user, I want to ...**
 1. ... read instructions.
 
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
@@ -284,13 +287,13 @@ As a first time user, I want to ...
 |-------------|------------|---------------------|-------------------|
 | Main Menu | Choose option 2 | General information about typing speeds is displayed | Works as expected |
 
-3. ... learn how I can improve my score.
+5. ... learn how I can improve my score.
 
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
 | Main Menu | Choose option 3 | Information on how to improve the score is displayed | Works as expected |
 
-4. ... save my results.
+6. ... save my results.
 
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
@@ -298,7 +301,7 @@ As a first time user, I want to ...
 | End of Test | Save results | Results can be saved to a new or existing score sheet | Works as expected |
 
 
-As a returning user, I want to ...
+**As a returning user, I want to ...**
 1. ... retake the test to see if my score has improved.
 
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
@@ -320,7 +323,7 @@ As a returning user, I want to ...
 | Main Menu | Choose option 6 and input saved scoresheet name to be deleted | Scoresheet will be deleted | Works as expected | 
 
 
-As the site owner, I want to ...
+**As the site owner, I want to ...**
 1. ... develop an application that is easy to use.
 
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
@@ -340,7 +343,7 @@ As the site owner, I want to ...
 |-------------|------------|---------------------|-------------------|
 | Main Menu | Choose option 3 | Information on how to improve the score is displayed | Works as expected |
 
-4. ... provide the user with background information.
+4. ... provide the user with background information on speed typing.
 
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
