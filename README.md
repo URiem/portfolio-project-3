@@ -44,7 +44,8 @@
     6. [Manual Testing](#manual-testing)
 6. [Bugs & Fixes](#bugs--fixes)
 7. [Deployment & Development](#deployment--development)
-8. [Credits](#credits)
+8. [Google Sheet Access](#google-sheet-access)
+9. [Credits](#credits)
 
 
 ## Introduction
@@ -196,6 +197,18 @@ The font of the heading is Special Elite, which emulates the look of the look of
 At this time the paragraph of random sentences created using 'wonderwords' is fairly nonsensical. In the future the developer would like to implement a simply routine that allows the user to request a short paragraph of text using ChatGPT on a topic of their choice. 
 
 Because the only purpose of the paragraph is to test speed and accuracy of typing, the developer does not feel that it detracts from the purpose of the test to have meaningless text as the current test material. 
+
+**Preliminary research on integrating ChatGPT.**
+
+A repository has been created with a simple python program derived from online resources, to test the basic functionality of ChatGPT within a phython structure. Further development is needed in order to adapt this structure and integrate it into the Speed Typing Test.
+
+[ChatGPT Repository](https://github.com/URiem/chatgpt-trial)
+
+**ChatGPT Resources**
+
+- [Geeks for Geeks](https://www.geeksforgeeks.org/how-to-use-chatgpt-api-in-python/)
+- [Rollbar](https://rollbar.com/blog/how-to-integrate-chatgpt-into-your-python-script/)
+
 
 ## Technologies Used
 
@@ -419,11 +432,9 @@ The repository can be cloned by the following steps:
 
 ## Google Sheet Access 
 
-Information for the assessors: 
+The following information is for the assessors or this project. A link to the Googlesheet that is used to store, retrieve and delete data as part of the Speed Typing Test can be found here: [Google Sheet](https://docs.google.com/spreadsheets/d/1v-5AT1lGhn5DdTJ2SSQxviafFVwBQmiwdsMQ1t6k-LA/edit?usp=sharing).
 
-Here is a link to the Googlesheet that is used to store, retrieve and delete data as part of the Speed Typing Test: [Google Sheet](https://docs.google.com/spreadsheets/d/1v-5AT1lGhn5DdTJ2SSQxviafFVwBQmiwdsMQ1t6k-LA/edit?usp=sharing).
-
-Please note that there is a prepopulated worksheet names 'test' which the assessors can use to test the functionality of the program. Additional results can be written to this worksheet, but it cannot be deleted. 
+Please note that there is a prepopulated worksheet named 'test' which the assessors can use to test the functionality of the program. Additional results can be written to this worksheet, but it cannot be deleted. 
 
 ## Credits
 
@@ -449,10 +460,6 @@ General information on speed typing and how to improve were found on the followi
 - [Pitman Training](https://www.pitman-training.ie/advice-hub/pitman-blog/fun-typing-facts-qwerty-keyboard-history-typing-speed/)
 - [Indeed](https://www.indeed.com/career-advice/career-development/improve-typing-skills)
 
-### ChatGPT Resources
-
-- [Geeks for Geeks](https://www.geeksforgeeks.org/how-to-use-chatgpt-api-in-python/)
-- [Rollbar](https://rollbar.com/blog/how-to-integrate-chatgpt-into-your-python-script/)
 
 ### Acknowledgements
 
