@@ -50,7 +50,7 @@
 
 ## Introduction
 
-The Speed and Accuracy Typing tests is designed to give users a chance to test their abilities in terms of typing speed and accuracy. It also gives users the opportunity to access information on what constitues a good average score and how to improve. Users can create a score sheet to save their results, they can access past data and calculate averages. The can also delete their score sheet. The program is designed in Python and is run through a terminal window.
+The Speed and Accuracy Typing Test is designed to give users a chance to test their abilities in terms of typing speed and accuracy. It also gives users the opportunity to access information on what constitues a good average score and how to improve their skills and score. Users can create a score sheet to save their results, they can access past data and calculate averages. The can also delete their score sheet. The program is designed in Python and is run through a terminal window.
 
 ## Project Goals
 
@@ -104,15 +104,15 @@ As the site owner, I want to ...
 
 #### Intial Stage
 
-At the initial stage the application will include a main menu where the user can choose from a few option for further information, such as instructions, information on average typing speeds, informationn on how to improve their typing skills. The user can also opt to create a username and score sheet to record results, they can review old results and delete a previously created and populated score sheet. Then the user will be able to run the test and see immediate feedback in the form of a typing speed in characters/mintues and words/minute as well as a percentage accuracy. 
+At the initial stage the application will include a main menu where the user can choose from a few option to obtain information, such as instructions, information on average typing speeds, and information on how to improve their typing skills. The user can also opt to create a username and score sheet to record results, they can review old results and delete a previously created and populated score sheet. Then the user will be able to run the test and see immediate feedback in the form of a typing speed in characters/mintues and words/minute as well as a percentage accuracy. 
 
 #### Future Additions
 
-In a future edition of the application the user will be able to access ChatGPT to create custom text to type.
+Currently a python library called 'Wonderwords' is used to create a short string of sentences for the user to copy into the terminal window. the sentences are, for the most part, nonsensical and simply serve the purpose of testing the users ability to type text by copying it from the terminal window. In a future edition of the application the developer would like to integrate ChatGPT so the user has the option to create custom text with meaning and context, which can then be used in the typing test.
 
 ### Structure
 
-The structure of the site itself consists of a one page website display that contains a terminal window. The Speed Typing Test is run in the terminal window. Above the terminal window a heading 'Speed Typing Test' is displayed, as well as a button that allows the user to start and repeatedly restart the program as many times as desired.
+The structure of the site itself consists of a one page website display that contains a terminal window. The Speed Typing Test is run in the terminal window. Above the terminal window a heading 'Speed Typing Test' is displayed, as well as a button that allows the user to restart the program as many times as desired.
 
 ### Flowchart/Skeleton
 
@@ -123,7 +123,7 @@ The following flow chart illustrates the approximate flow of the program and cho
 
 ### Surface
 
-To add a little bit of appeal to the site, the surface has been modified slightly from the provided CI template. The terminal window is centered in the browser and a background picture featuring an image of a keyboard adds visual appeal fitting the theme of the application. 
+To add visual appeal to the site, the surface has been modified slightly from the provided CI template. The terminal window is centered in the browser and a background picture featuring an image of a keyboard was choosen to fit with the theme of the application. 
 
 #### Color Scheme
 
@@ -131,11 +131,11 @@ The background picture has light grey shades to maintain contrast between the ba
 
 The button above the terminal window is a bright green color so that it lifts out from the page and calls for action. 
 
-The text in the terminal window is colored depending on the type of information displayed or action called for. Menu options are generally displayed in plain white text. User input is requested in green text. Errors are displayed in red. The welcome heading and score headings are yellow. Important information and subheadings are bold and underlined. 
+The text in the terminal window is colored depending on the type of information displayed or action called for. Menu options are generally displayed in plain white text. User input is requested in green text. Errors are displayed in red. The welcome and score headings are yellow. Important information and subheadings are in white, bold and underlined. 
 
 #### Font
 
-The font of the heading is Special Elite, which emulates the look of the look of a classic type writer font.
+The font of the heading is Special Elite, which emulates the look of a classic type writer font.
 
 ### Features
 
@@ -333,7 +333,7 @@ Several sites came in handy while developing the code to help with problem solvi
 
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
-| Main Menu | Choose option 6 and input saved scoresheet name to be deleted | Scoresheet will be deleted | Works as expected | 
+| Main Menu | Choose option 6 and input saved scoresheet name to be deleted follow prompts | Scoresheet will be deleted | Works as expected | 
 
 
 **As the site owner, I want to ...**
@@ -367,7 +367,7 @@ Several sites came in handy while developing the code to help with problem solvi
 | **Feature** | **Action** | **Expected Result** | **Actual Result** |
 |-------------|------------|---------------------|-------------------|
 | End of test | Save results to existing or new score sheet | Results are saved to a score sheet | Works as expected |
-| Return to main menu | At the end of test save results and return to main menu | Main menu is displayed | Works as expected |
+| Return to main menu | At the end of test, save results and return to main menu | Main menu is displayed | Works as expected |
 | Main Menu | Choose option 7 | Test begins again | Works as expected |
 | Main Menu | Choose option 4 and input saved scoresheet name | Previous results and averages are displayed | Works as expected | 
 
@@ -432,9 +432,9 @@ The repository can be cloned by the following steps:
 
 ## Google Sheet Access 
 
-The following information is for the assessors or this project. A link to the Googlesheet that is used to store, retrieve and delete data as part of the Speed Typing Test can be found here: [Google Sheet](https://docs.google.com/spreadsheets/d/1v-5AT1lGhn5DdTJ2SSQxviafFVwBQmiwdsMQ1t6k-LA/edit?usp=sharing).
+The following information is for the assessors of this project. A link to the Googlesheet that is used to store, retrieve and delete data as part of the Speed Typing Test can be found here: [Google Sheet](https://docs.google.com/spreadsheets/d/1v-5AT1lGhn5DdTJ2SSQxviafFVwBQmiwdsMQ1t6k-LA/edit?usp=sharing).
 
-Please note that there is a prepopulated worksheet named 'test' which the assessors can use to test the functionality of the program. Additional results can be written to this worksheet, but it cannot be deleted. 
+Please note that there is a prepopulated worksheet named **'test'** which the assessors can use to test the functionality of the program. Additional results can be written to this worksheet, but it cannot be deleted. 
 
 ## Credits
 
