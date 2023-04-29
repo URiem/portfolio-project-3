@@ -258,7 +258,7 @@ def create_user_score_sheet():
         try:
             user_scsht = SH.worksheet(usrnm)
             cprint(
-                f"\nA sheet with the name {usrnm} already exist.\n",
+                f"\nA sheet with the name '{usrnm}' already exist.\n",
                 attrs=["bold", "underline"]
             )
             cprint("Do you you want to:\n", attrs=["bold", "underline"])
@@ -439,12 +439,13 @@ def generate_random_paragraph():
     """
     Create a paragraph of random sentences using wonderwords.
     Adapted from:
-    https://towardsdatascience.com/speed-typing-test-project-with-python-da1a56987a5b
+    'https://towardsdatascience.com/
+    speed-typing-test-project-with-python-da1a56987a5b'
     """
     sent_list = []
     sent_para = ""
 
-    for i in range(2):
+    for i in range(3):
         sent = RandomSentence()
         random_sent = sent.sentence()
         sent_list.append(random_sent)
@@ -459,7 +460,8 @@ def typed_paragraph():
     """
     This function captures the typed paragraph from the user and
     measures the time taken to type the paragraphy. Adapted from:
-    https://towardsdatascience.com/speed-typing-test-project-with-python-da1a56987a5b
+    'https://towardsdatascience.com/
+    speed-typing-test-project-with-python-da1a56987a5b'
     """
     start_time = time.time()
     typed_para = input()
@@ -608,7 +610,11 @@ def main():
             raise ValueError
     except ValueError:
         cprint(
-            f"\nInvalid input: {choice}. Please a number from 1 to 8.\n",
+            f"\nInvalid input: {choice}.\n",
+            "red", attrs=["bold"]
+        )
+        cprint(
+            "Return to the main menu and enter a number from 1 to 8.\n",
             "red", attrs=["bold"]
         )
         return_to_main()
