@@ -216,15 +216,21 @@ A repository has been created with a simple python program derived from online r
 - Python
 
 #### Python Libraries
+
+The following libraries are standard in python and come preinstalled to deal with a variety of contextual issues:
+
 - Time
 - OS
 - Difflib
 - Statistics
 - Ast
-- Gspread
-- Wonderwords
-- Termcolor
-- Pandas
+
+The following libraries where specifically installed to fascilitate various processes specific to this application:
+
+- Gspread: Fascilitates the access to and manipulation of a Google Speadsheet to save and manipulate data.
+- Wonderwords: Fascilitates the generation of a random paragraph used in the typing test.
+- Termcolor: Helps in making the program  more visually appealing and easier to navigate.
+- Pandas: Was used to display a data table in the terminal for easier readability.
 
 ### Frameworks & Tools
 - Git
