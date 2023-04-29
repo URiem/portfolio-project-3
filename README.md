@@ -50,7 +50,7 @@
 
 ## Introduction
 
-The Speed and Accuracy Typing Test is designed to give users a chance to test their abilities in terms of typing speed and accuracy. It also gives users the opportunity to access information on what constitues a good average score and how to improve their skills and score. Users can create a score sheet to save their results, they can access past data and calculate averages. The can also delete their score sheet. The program is designed in Python and is run through a terminal window.
+The Speed and Accuracy Typing Test is designed to give users a chance to test their typing skills in terms of speed and accuracy. It also gives users the opportunity to access information on what constitues a good average score and how to improve their skills and score. Users can create a score sheet to save their results, they can access past data and calculate averages. The can also delete their score sheet. The program is designed in Python and is run through a terminal window.
 
 ## Project Goals
 
@@ -108,7 +108,7 @@ At the initial stage the application will include a main menu where the user can
 
 #### Future Additions
 
-Currently a python library called 'Wonderwords' is used to create a short string of sentences for the user to copy into the terminal window. the sentences are, for the most part, nonsensical and simply serve the purpose of testing the users ability to type text by copying it from the terminal window. In a future edition of the application the developer would like to integrate ChatGPT so the user has the option to create custom text with meaning and context, which can then be used in the typing test.
+Currently a python library called 'Wonderwords' is used to create a short string of sentences for the user to copy into the terminal window. The sentences are, for the most part, nonsensical and simply serve the purpose of testing the users ability to type text by copying it from the terminal window. In a future edition of the application the developer would like to integrate ChatGPT so the user has the option to create custom text with meaning and context, which can then be used in the typing test.
 
 ### Structure
 
@@ -401,7 +401,6 @@ The website was deployed on Heroku. The following steps were followed in order f
 
 1. The requirements.txt file was populated using the command "pip3 freeze > requirements.txt'
 2. Any text inside the 'input()' function in the run.py file had a 'new line' command (\n) added in order to work properly with the Code Institute template.
-
 3. Once loged into the Heroku dashboard, a new app was created by clicking on the button 'New' and select 'Create New App'.
 5. The app was named 'speed-typing-test' and region 'Europe' selected.
 6. Under 'Setting' in the newly created app, 'Reveal Config Vars' was clicked in order to set environment variables such as sensitive information.

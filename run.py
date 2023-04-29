@@ -395,7 +395,8 @@ def run_test_display_results():
 
     ent = input(
         colored(
-            "Hit enter when you are ready to start typing.\n",
+            """Hit enter when you are ready to start typing.
+    Do not hit enter again until you are done typing.\n""",
             "green", attrs=["bold"]
         )
     )
