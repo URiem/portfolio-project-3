@@ -28,13 +28,14 @@ SH = GSPREAD_CLIENT.open('typing-tests')
 def clear():
     """
     Clear the terminal window when new text section is displayed
+    adapoted from https://www.geeksforgeeks.org/clear-screen-python/
     """
     # for windows
     if name == 'nt':
-        _ = system('cls')
+        system('cls')
     # for mac and linux
     else:
-        _ = system('clear')
+        system('clear')
 
     cprint(
         "*** Welcome to the Speed Typing Test! ***\n",
@@ -126,7 +127,7 @@ def print_more_information():
     print("The QWERTY keyboard layout is standard on nearly every keyboard")
     print("and phone in the English-speaking world. Currently, the average")
     print("typing speed on a QWERTY layout for an adult who uses typing")
-    print("for their job is around 60 WPM. Touch typists using the home-row")
+    print("for their job is around 44 WPM. Touch typists using the home-row")
     print("method are typically faster typists because they don’t look down")
     print("at the keyboard and type from muscle memory. Hunt and peck typists")
     print("typically use two-fingers and look at the keys as they type,")
@@ -436,7 +437,9 @@ def run_test_display_results():
 
 def generate_random_paragraph():
     """
-    Create a paragraph of random sentences using wonderwords
+    Create a paragraph of random sentences using wonderwords.
+    Adapted from:
+    https://towardsdatascience.com/speed-typing-test-project-with-python-da1a56987a5b
     """
     sent_list = []
     sent_para = ""
@@ -455,7 +458,8 @@ def generate_random_paragraph():
 def typed_paragraph():
     """
     This function captures the typed paragraph from the user and
-    measures the time taken to type the paragraphy
+    measures the time taken to type the paragraphy. Adapted from:
+    https://towardsdatascience.com/speed-typing-test-project-with-python-da1a56987a5b
     """
     start_time = time.time()
     typed_para = input()
