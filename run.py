@@ -88,7 +88,7 @@ def print_instructions():
     """
     Prints the instruction for the Speed Test
     """
-    cprint("\nInstructions\n", attrs=["underline", "bold"])
+    cprint("Instructions\n", attrs=["underline", "bold"])
     print(
         """* Read and follow prompts closely as you navigate through
     the program."""
@@ -123,7 +123,7 @@ def print_more_information():
     Print general information on average typing speeds and
     other useful or interesting information
     """
-    cprint("\nDid you know?\n", attrs=["underline", "bold"])
+    cprint("Did you know?\n", attrs=["underline", "bold"])
     print("The QWERTY keyboard layout is standard on nearly every keyboard")
     print("and phone in the English-speaking world. Currently, the average")
     print("typing speed on a QWERTY layout for an adult who uses typing")
@@ -144,7 +144,7 @@ def print_tips():
     """
     Print on how to improve typing speed and accuracy
     """
-    cprint("\nHow can you improve?\n", attrs=["underline", "bold"])
+    cprint("How can you improve?\n", attrs=["underline", "bold"])
     print("* Familiarize yourself with proper keyboard and hand position.\n")
     print("* Learn proper overall positioning of the screen and your body.\n")
     print("* Start by typing slowly to avoid mistakes.\n")
